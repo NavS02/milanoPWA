@@ -637,7 +637,7 @@ export default {
       url.value = window.location.origin;
       itemsFiltered = null;
       loaded.value = true;
-      // CLEAR TABLE
+      // CLEAR TABLEE
       items.value = null;
     }
 
