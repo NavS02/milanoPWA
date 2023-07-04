@@ -44,6 +44,7 @@
       <div class="d-flex align-items-center">
         <h5 class="card-title mb-2">Acquisizione/Collezione (ACQN):</h5>
         <div class="form-check form-switch ms-5">
+      <span class="resti2">non presente</span>
           <input class="form-check-input acqn" type="checkbox" id="acqnCheckbox" title="Not contains">
         </div>
       </div>
@@ -59,9 +60,20 @@
       </select>
     </div>
     <div class="form-check form-switch col-md-6 " style="margin-top:50px">
-      <span class="resti">Resti</span>
+      <span class="resti">Opera restituita</span>
       <input class="form-check-input" type="checkbox" id="resti">
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+  
+    <div class="form-check form-switch col-md-6 " style="margin-top:50px">
+      <span class="resti"> Opera esposta</span>
+      <input class="form-check-input" type="checkbox" id="deposito">
+    </div>
+  </div>
+  
   </div>
 </template>
 
@@ -101,6 +113,13 @@ async function fetchRelationalItems() {
   font-weight: 500;
   color: #012970;
   font-family: "Poppins", sans-serif;
+}
+.resti2{
+ font-size: 14px;
+  font-weight: 500;
+  color: #012970;
+  font-family: "Poppins", sans-serif;
+
 }
 .acqn:checked {
   background-color: red;

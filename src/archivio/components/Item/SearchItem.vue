@@ -287,6 +287,8 @@ export default {
       let sti_tipo = document.getElementById("sti_tipo").value;
       let resultACQN = document.getElementById("resultACQN").value;
       let resti = document.getElementById("resti").checked;
+      let deposito = document.getElementById("deposito").checked;
+
       let acqnCheckbox =document.getElementById("acqnCheckbox").checked;
 
       counter.value = 0;
@@ -407,6 +409,11 @@ export default {
         if (resti !== false) {
        
           query["filter"]["resti"] = { _eq: true };
+
+        }
+         if (deposito !== false) {
+       
+          query["filter"]["resti"] = { _eq: false };
 
         }
         if (sti_tipo !== "") {
@@ -631,6 +638,7 @@ export default {
       document.getElementById("sti_tipo").value = null;
       document.getElementById("resultACQN").value = null;
       document.getElementById("resti").checked = false
+      document.getElementById("deposito").checked = false
       document.getElementById("acqnCheckbox").checked = false
       totalResult.value = 0;
       totalPages.value = 0;

@@ -62,3 +62,8 @@ export { default as biblio } from './bib/biblio'
 
 export { default as pref } from './pref'
 export { default as collocazione } from './collocazione'
+
+
+// APP
+export { default as app } from './app/app'
+

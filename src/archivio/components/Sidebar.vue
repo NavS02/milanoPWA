@@ -244,6 +244,43 @@ export default {
           </div>
         </div>
       </div>
+         <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse4"
+            aria-expanded="false"
+            aria-controls="collapse4"
+          >
+            APP
+          </button>
+        </h2>
+        <div
+          id="collapse4"
+          class="accordion-collapse collapse"
+          aria-labelledby="heading3"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <router-link class="nav-link" :to="{ name: 'searchArc' }">
+                  <i class="bi bi-search text-warning"></i> Cerca</router-link
+                >
+              </li>
+              <li class="list-group-item">
+                <router-link class="nav-link" :to="{ name: 'CreateArc', params: { collection: 'app' } }">
+                <i class="bi bi-file-earmark-plus text-info"></i> Nuova scheda</router-link
+                >
+                
+              </li>
+             
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
   </aside>
