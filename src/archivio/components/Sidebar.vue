@@ -266,8 +266,8 @@ export default {
           <div class="accordion-body">
             <ul class="list-group">
               <li class="list-group-item">
-                <router-link class="nav-link" :to="{ name: 'searchArc' }">
-                  <i class="bi bi-search text-warning"></i> Cerca</router-link
+                <router-link class="nav-link" :to="{ name: 'listArc', params: { collection: 'app' } }">
+                  <i class="bi bi-search text-warning"></i> Lista</router-link
                 >
               </li>
               <li class="list-group-item">
@@ -276,7 +276,7 @@ export default {
                 >
                 
               </li>
-             
+
             </ul>
           </div>
         </div>

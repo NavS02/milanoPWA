@@ -23,6 +23,8 @@ import EditItem from '../components/Item/EditItem.vue'
 import InfoItem from '../components/Item/InfoItem.vue'
 import SearchItem from '../components/Item/SearchItem.vue'
 import model1 from '../components/Item//PrintItem/model1.vue'
+// app
+import SearchApp from '../components/Item/Searchapp/SearchItem.vue'
 
 
 const routes = [

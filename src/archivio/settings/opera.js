@@ -19,6 +19,8 @@ import Divider from "../../models/Divider";
 import cronologia from "./cronologia";
 import ambito from "./ambito";
 import committenza from "./committenza";
+import collezione from "./collezione";
+
 import inventario from "./inventario";
 import fta from "./fta";
 import fonte from "./fonte";
@@ -309,7 +311,13 @@ export default {
         value: "",
         column: "12",
       }),
-
+      new FormField({
+        name: "descrizione_breve",
+        label: "Descrizione breve",
+        type: "textarea",
+        defaultValue: null,
+        column: "12",
+      }),
       /* cronologia */
 
       new ManyToManyField({
@@ -610,21 +618,50 @@ export default {
         label: "Deposito",
         type: "toggle",
         value: "",
-        column: "4",
+        column: "2",
       }),
       new FormField({
+        name: "in_museo",
+        label: "In museo",
+        type: "toggle",
+        value: "",
+        column: "2",
+      }),
+      new SelectField({
         name: "piano",
         label: "Piano",
-        type: "text",
+        type: "select",
         value: "",
         column: "3",
+        options: [
+          { value: "", label: "" },
+          { value: "piano terra", label: "Piano terra" },
+          { value: "primo piano", label: "Primo piano" },
+          { value: "ipogeo", label: "Ipogeo" },
+        ],
       }),
-      new FormField({
+    
+      new SelectField({
         name: "sala",
         label: "Sala",
-        type: "text",
+        type: "select",
         value: "",
         column: "3",
+        options: [
+          { value: "", label: "" },
+          { value: "Corridoio centrale", label: "Corridoio centrale" },
+          { value: "Sala dell’Arciconfraternita", label: "Sala dell’Arciconfraternita" },
+          { value: "Sala Fontana", label: " Sala Fontana" },
+          { value: "Crociera", label: "Crociera" },
+          { value: "Scalone", label: "Scalone" },
+          { value: "Corridoio centrale", label: "Corridoio centrale" },
+          { value: "Corridoio laterale sinistro", label: "Corridoio laterale sinistro" },
+          { value: "Corridoio laterale destro", label: "Corridoio laterale destro" },
+          { value: "Sala fondi oro", label: "Sala fondi oro" },
+          { value: "Sala Marcenaro", label: "Sala Marcenaro" },
+
+
+        ],
       }),
       new FormField({
         name: "parete",
@@ -837,7 +874,23 @@ export default {
           return { cmmn: { _contains: text } };
         },
       }),
-
+      new ManyToOneField({
+        name: "collezione",
+        label: "Collezione",
+        value: null,
+        related: "collezione",
+        type: "manyToOne",
+        column: "4",
+        voc: "open",
+        preview: (item) => {
+          return `${item?.collezione}`;
+        },
+        fields: collezione.fields,
+        filter: (text) => {
+          if (text.trim() === "") return {};
+          return { collezione: { _contains: text } };
+        },
+      }),
       new Divider({ type: "divider" }),
 
       new FormField({

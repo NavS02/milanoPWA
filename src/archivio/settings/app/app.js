@@ -8,11 +8,6 @@ import {
   Files,
   Image,
 } from "../../../models";
-import tipologia from "./tipologia";
-import collezione from "./collezione";
-import piano from "./piano";
-import sala from "./sala";
-import provenienza from "./provenienza";
 
 export default {
   collection: "app",
@@ -27,10 +22,9 @@ export default {
         quality: 10,
         column: 4,
       }),
-      new FormField({ name: "dida", label: "dida", type: "text", value: "" }),
       new Files({
         name: "altre_immagini",
-        label: "Altre imagini",
+        label: "Altre immagini",
         foreign_key: "directus_files_id",
         value: [],
         fit: "contain",
@@ -40,125 +34,188 @@ export default {
         column: 4,
       }),
       new FormField({
-        name: "titolo",
-        label: "titolo",
-        type: "text",
-        value: "",
-      }),
-      new FormField({
         name: "pubblicata",
-        label: "pubblicata",
+        label: "Pubblicata",
         type: "toggle",
         value: "",
+        column: 4,
       }),
+      new FormField({
+        name: "titolo",
+        label: "Titolo",
+        type: "text",
+        value: "",
+        column: 12,
+      }),
+      new FormField({
+        name: "invn",
+        label: "Numero Inventario",
+        type: "text",
+        value: "",
+        column: 6,
+        edit: "false",
+      }),
+      new FormField({
+        name: "dida",
+        label: "Didascalia immagine",
+        type: "text",
+        value: "",
+        column: 6,
+      }),
+
+      new FormField({
+        name: "autn",
+        label: "Autore",
+        type: "text",
+        value: "",
+        column: 4,
+        edit: "false",
+      }),
+      new FormField({
+        name: "auta",
+        label: "Dati Anagrafici",
+        type: "text",
+        value: "",
+        column: 4,
+        edit: "false",
+      }),
+      new FormField({
+        name: "auts",
+        label: "Riferimento all’autore",
+        type: "text",
+        value: "",
+        column: 4,
+        edit: "false",
+      }),
+
       new FormField({
         name: "autore",
-        label: "autore",
+        label: "Autore",
         type: "text",
         value: "",
+        column: 12,
+      }),
+
+      new FormField({
+        name: "sgti",
+        label: "Soggetto",
+        type: "text",
+        value: "",
+        column: 6,
+        edit: "false",
       }),
       new FormField({
-        name: "soggetto",
-        label: "soggetto",
+        name: "ogtd",
+        label: "Oggetto",
         type: "text",
         value: "",
+        column: 6,
+        edit: "false",
       }),
       new FormField({
         name: "materia",
-        label: "materia",
+        label: "Materia",
         type: "text",
         value: "",
+        column: 6,
+        edit: "false",
       }),
-      new FormField({ name: "data", label: "data", type: "text", value: "" }),
-      new FormField({ name: "descrizione", label: "descrizione", type: "textarea", value: "" }),
-      new ManyToOneField({
-        name: "tipologia",
-        label: "tipologia",
-        value: null,
-        related: "tipologia",
-        type: "manyToOne",
-
-        preview: (item) => {
-          return `${item?.app_tipologia}`;
-        },
-        fields: tipologia.fields,
-        filter: (text) => {
-          if (text.trim() === "") return {};
-          return { tipologia: { _contains: text } };
-        },
+      new FormField({
+        name: "data",
+        label: "Data",
+        type: "text",
+        value: "",
+        column: 6,
       }),
 
-      new ManyToOneField({
+      new FormField({
+        name: "descrizione",
+        label: "Descrizione",
+        type: "textarea",
+        value: "",
+        edit: "false",
+      }),
+      new FormField({
         name: "collezione",
-        label: "collezione",
-        value: null,
-        related: "collezione",
-        type: "manyToOne",
-
-        preview: (item) => {
-          return `${item?.app_collezione}`;
-        },
-        fields: collezione.fields,
-        filter: (text) => {
-          if (text.trim() === "") return {};
-          return { collezione: { _contains: text } };
-        },
+        label: "Collezione",
+        type: "text",
+        value: "",
+        column: 6,
+        edit: "false",
+      }),
+      new FormField({
+        name: "tipologia",
+        label: "Tipologia",
+        type: "text",
+        value: "",
+        column: 6,
       }),
 
-      new ManyToOneField({
-        name: "piano",
-        label: "piano",
-        value: null,
-        related: "piano",
-        type: "manyToOne",
+      new FormField({
+        name: "tcl",
+        label: "Tipo di Localizzazione",
+        type: "text",
+        value: "",
+        column: 4,
+        edit: "false",
 
-        preview: (item) => {
-          return `${item?.app_piano}`;
-        },
-        fields: piano.fields,
-        filter: (text) => {
-          if (text.trim() === "") return {};
-          return { piano: { _contains: text } };
-        },
-      }),
-      new ManyToOneField({
-        name: "sala",
-        label: "sala",
-        value: null,
-        related: "sala",
-        type: "manyToOne",
-
-        preview: (item) => {
-          return `${item?.app_sala}`;
-        },
-        fields: sala.fields,
-        filter: (text) => {
-          if (text.trim() === "") return {};
-          return { sala: { _contains: text } };
-        },
       }),
 
-      new ManyToOneField({
+      new FormField({
+        name: "prvc",
+        label: "Comune",
+        type: "text",
+        value: "",
+        column: 4,
+        edit: "false",
+      }),
+      new FormField({
+        name: "prcd",
+        label: "Denominazione",
+        type: "text",
+        value: "",
+        column: 4,
+        edit: "false",
+      }),
+      new FormField({
         name: "provenienza",
-        label: "provenienza",
-        value: null,
-        related: "provenienza",
-        type: "manyToOne",
+        label: "Provenienza",
+        type: "text",
+        value: "",
+        column: 12,
+      }),
+      new FormField({
+        name: "piano",
+        label: "Piano",
+        type: "text",
+        value: "",
+        column: 6,
+        edit: "false",
+      }),
 
-        preview: (item) => {
-          return `${item?.app_provenienza}`;
-        },
-        fields: provenienza.fields,
-        filter: (text) => {
-          if (text.trim() === "") return {};
-          return { provenienza: { _contains: text } };
-        },
+      new FormField({
+        name: "sala",
+        label: "Sala",
+        type: "text",
+        value: "",
+        column: 6,
+        edit: "false",
+      }),
+      new FormField({
+        name: "parete",
+        label: "Parete",
+        type: "text",
+        value: "",
+        column: 6,
+        edit: "false",
       }),
       new FormField({
         name: "specifiche",
-        label: "specifiche",
+        label: "Specifiche",
         type: "text",
         value: "",
+        column: 6,
+        edit: "false",
       }),
     ];
   },
@@ -166,6 +223,9 @@ export default {
     return [
       { key: "id", label: "ID \t", sortable: true },
       { key: "titolo", label: "Titolo", sortable: true },
+      { key: "autn", label: "Autore", sortable: true },
+      { key: "sgti", label: "Soggetto", sortable: true },
+      { key: "actions", label: "Azione", sortable: false },
     ];
   },
 };

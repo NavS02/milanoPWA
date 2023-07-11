@@ -12,6 +12,8 @@ import Logout from "../pages/Logout.vue";
 import MainLayoutArc from "../archivio/layouts/MainLayout.vue";
 import ListItemsArc from "../archivio/components/Item/ListItems.vue";
 import searchArc from "../archivio/components/Item/SearchItem.vue";
+import searchApp from "../archivio/components/Item/Searchapp/SearchItem.vue";
+
 import CreateItemArc from "../archivio/components/Item/CreateItem.vue";
 import EditItemArc from "../archivio/components/Item/EditItem.vue";
 import userArc from "../archivio/pages/User.vue";
@@ -52,6 +54,8 @@ const routes = [
         props: true,
         meta: { requiresAuth: true },
       },
+      { path: '/items/searchApp', name: 'searchApp', component: searchApp,meta: { requiresAuth: true }, props: false, },
+
       {
         path: "/archivio/create/:collection",
         name: "createArc",

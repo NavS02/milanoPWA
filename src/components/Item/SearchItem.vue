@@ -271,7 +271,7 @@ export default {
         (currentPage.value - 1) * resultLimit,
         currentPage.value * resultLimit
       );
-      fetchIconSaved();
+      fetchIcons();
       fetchRelations();
     }
 
@@ -590,7 +590,7 @@ export default {
         });
       } catch (error) { }
     }
-    async function fetchIconSaved() {
+    async function fetchIcons() {
       me.value = await directus.users.me.read();
 
       let query2 = {

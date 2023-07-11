@@ -19,6 +19,14 @@
               <font-awesome-icon icon="fa-solid fa-floppy-disk" fixed-width />
               <span class="ms-1">Salva</span>
             </button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="onEditOpera(id)"
+              v-if="collection === 'app'"
+            >
+              <font-awesome-icon :icon="['fa-solid', 'fa-paintbrush']" />
+              <span class="ms-1">Edita Opera</span>
+            </button>
           </div>
         </template>
       </Form>
@@ -53,49 +61,83 @@ const loaded = ref(false);
 const fields = ref([]); // fields settings
 
 // watch the route and update data based on the collection param
-watch(route, async () => {
-    if(!collection.value) return
+watch(
+  route,
+  async () => {
+    if (!collection.value) return;
     // retrieve the settings
-    const itemSettings = settings[collection.value]
+    const itemSettings = settings[collection.value];
     // define the subset of fields you need to view in the table
-    const collectionFields = itemSettings.fields()
+    const collectionFields = itemSettings.fields();
 
     // use an instant timeout to make sure the item will update
     setTimeout(async () => {
-        const data = await store.collections.fetchOne(collection.value, id.value, true)
-        for (const field of collectionFields) {
-            await field.setInitialValue(data?.[field.name])
-        }
-        fields.value = collectionFields
-         loaded.value = true;
+      const data = await store.collections.fetchOne(
+        collection.value,
+        id.value,
+        true
+      );
+      for (const field of collectionFields) {
+        await field.setInitialValue(data?.[field.name]);
+      }
+      fields.value = collectionFields;
+      loaded.value = true;
 
       fecthImage();
     }, 0);
-}, {immediate: true, deep: true})
+  },
+  { immediate: true, deep: true }
+);
 
 async function onCancelClicked() {
-    const confirmed = await modal.confirm({title:'Confirma', body:'Sei sicuro di voler lasciare questa pagina?'})
-    if(!confirmed) return
-    goToList()
+  const confirmed = await modal.confirm({
+    title: "Confirma",
+    body: "Sei sicuro di voler lasciare questa pagina?",
+  });
+  if (!confirmed) return;
+  goToList();
 }
 function onSaveClicked(data) {
-    save(data())
+  save(data());
 }
 function goToList() {
-    router.push({name: 'listArc', params: { collection: collection.value }})
+  router.push({ name: "listArc", params: { collection: collection.value } });
+}
+
+async function onEditOpera(id) {
+  let query = {
+    limit: 1,
+    filter: {
+      app: {
+        _eq: id,
+      },
+    },
+  };
+
+  let response = await directus.items("opera").readByQuery(query);
+  router
+    .push({
+      name: "editItemArc",
+      params: { id: response.data[0].id, collection: "opera" },
+    })
+    .then(() => {
+      location.reload();
+    });
 }
 async function save(data) {
-    try {
-        const response = await directus.items(collection.value).updateOne(id.value, data)
-        goToList()
-    } catch (error) {
-        console.error(error)
-        toaster.toast({title:'Error', body: error}, 'top right')
-    }
+  try {
+    const response = await directus
+      .items(collection.value)
+      .updateOne(id.value, data);
+    goToList();
+  } catch (error) {
+    console.error(error);
+    toaster.toast({ title: "Error", body: error }, "top right");
+  }
 }
 async function fecthImage() {
   url.value = import.meta.env.VITE_API_BASE_URL; //url of directus
-  const imgresponse = await directus.items("opera").readByQuery({
+  const imgresponse = await directus.items(collection.value).readByQuery({
     filter: {
       id: {
         _eq: id.value,

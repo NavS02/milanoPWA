@@ -105,7 +105,6 @@ async function fetchData() {
         const {data=[], meta={total_count:0, filter_counf:0}} = response
         items.value = data
         metadata.value = meta
-        console.log(response)
     } catch (error) {
         console.log(error)
     } finally {

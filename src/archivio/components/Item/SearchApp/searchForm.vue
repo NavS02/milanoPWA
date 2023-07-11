@@ -43,10 +43,10 @@
     <div class="col-md-6">
       <div class="d-flex align-items-center">
         <h5 class="card-title mb-2">Acquisizione/Collezione (ACQN):</h5>
-        <!-- <div class="form-check form-switch ms-5">
+        <div class="form-check form-switch ms-5">
       <span class="resti2">non presente</span>
           <input class="form-check-input acqn" type="checkbox" id="acqnCheckbox" title="Not contains">
-        </div> -->
+        </div>
       </div>
       <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
         id="resultACQN" />
@@ -59,61 +59,32 @@
         <option v-for="(tipo, index) in sti_tipo" :key="index" :value="tipo">{{ tipo }}</option>
       </select>
     </div>
-    <div class="col-md-6">
-  
-      <h5 class="card-title">Nome restauratore (RSTN):</h5>
-      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="resultRSTN" />
-      </div>
-   
-  </div>
-  <div class="row">
-     <div class="col-md-6">
-      <h5 class="card-title">Collezione</h5>
-      <select class="form-select" aria-label="Collezione" v-model="selectedOption" id="resultCollezione">
-        <option v-for="(col, index) in collezione" :key="index" :value="col">{{ col }}</option>
-      </select>
-    </div>
-     <div class="col-md-6">
-  
-      <h5 class="card-title">Condizione giuridica/propieta (CDGS):</h5>
-      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="resultCDGS" />
-      </div>
-  </div>
-  <div class="row">
-     <div class="form-check form-switch col-md-4 " style="margin-top:50px">
+    <div class="form-check form-switch col-md-6 " style="margin-top:50px">
       <span class="resti">Opera restituita</span>
       <input class="form-check-input" type="checkbox" id="resti">
     </div>
-    <div class="col-md-4">
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
   
-    <div class="form-check form-switch" style="margin-top:50px">
-      <span class="resti"> Opera esposta</span>
+    <div class="form-check form-switch col-md-6 " style="margin-top:50px">
+      <span class="deposito"> Opera esposta</span>
       <input class="form-check-input" type="checkbox" id="deposito">
     </div>
-    
   </div>
-  <div class="col-md-4">
-  
-    <div class="form-check form-switch" style="margin-top:50px">
-      <span class="resti"> In museo</span>
-      <input class="form-check-input" type="checkbox" id="inMuseo">
-    </div>
-    </div>
   
   </div>
-
-
 </template>
 
 <script setup>
 import { ref, watch, toRefs, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { directus } from "../../API";
+import { directus } from "../../../API";
 const toaster = inject("$toaster");
 const modal = inject("$modalManager");
 const url = ref("/not-found.svg");
-const sti_tipo = ref([]);
-const collezione = ref([]);
+const sti_tipo = ref([])
 const props = defineProps({
   collection: { type: String, default: "" },
   id: { type: String, default: null },
@@ -129,11 +100,6 @@ async function fetchRelationalItems() {
   const response = await directus.items("sti_tipo").readByQuery({ limit: -1 })
   sti_tipo.value = response.data.map((item) => item.sti_tipo);
   sti_tipo.value.push("")
-
-
-  const response2 = await directus.items("collezione").readByQuery({ limit: -1 })
-  collezione.value = response2.data.map((item) => item.collezione);
-  collezione.value.push("")
 
 }
 

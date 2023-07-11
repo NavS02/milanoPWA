@@ -1,17 +1,17 @@
 <template>
   <main id="main" class="main">
     <div class="col-12">
+
+
+
       <!-- Search Form -->
       <keep-alive>
         <searchForm />
       </keep-alive>
 
+
       <br />
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="fetchData()"
-      >
+      <button type="button" class="btn btn-outline-primary" @click="fetchData()">
         Cerca
       </button>
       &nbsp
@@ -20,37 +20,19 @@
       </button>
       <hr />
       Mostra:
-      <input
-        type="number"
-        aria-label="Small"
-        aria-describedby="inputGroup-sizing-sm"
-        value="50"
-        id="limit"
-        @input="infoQty()"
-      />
+      <input type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="50" id="limit"
+        @input="infoQty()" />
       &nbsp
       {{ totalResult }} schede trovate
 
       <div class="form-check" style="float: right">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDisabled"
-          id="flexRadioDefault1"
-          v-model="selectedOption"
-          value="list"
-        />
+        <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDefault1"
+          v-model="selectedOption" value="list" />
         <label class="form-check-label" for="flexRadioDefault1"> Lista </label>
       </div>
       <div class="form-check" style="float: right">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDisabled"
-          id="flexRadioDefault2"
-          v-model="selectedOption"
-          value="card"
-        />
+        <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDefault2"
+          v-model="selectedOption" value="card" />
         <label class="form-check-label" for="flexRadioDefault2"> Carta </label>
       </div>
 
@@ -62,50 +44,22 @@
         </div>
         <div class="card-body" v-if="selectedOption === 'list'">
           <div class="table-responsive">
-            <Table
-              class="table v-middle m-0"
-              :items="items"
-              :fields="fields"
-              id="table"
-            >
+            <Table class="table v-middle m-0" :items="items" :fields="fields" id="table">
               <template #cell(actions)="{ item, field, value }">
                 <div class="actions">
-                  <button
-                    title="edit"
-                    class="btn btn-sm btn-light"
-                    @click="onEditClicked(item)"
-                  >
+                  <button title="edit" class="btn btn-sm btn-light" @click="onEditClicked(item)">
                     <font-awesome-icon icon="fa-solid fa-pencil" fixed-width />
                   </button>
 
-                  <button
-                    title="save"
-                    class="btn btn-sm btn-light text-danger"
-                    @click="onSaveClicked(item)"
-                  >
+                  <button title="save" class="btn btn-sm btn-light text-danger" @click="onSaveClicked(item)">
                     <i class="bi bi-heart" :id="'saveButton-' + item.id"></i>
                   </button>
-                  <button
-                    title="delete"
-                    class="btn btn-sm btn-light text-danger"
-                    @click="onDeleteClicked(item)"
-                  >
+                  <button title="delete" class="btn btn-sm btn-light text-danger" @click="onDeleteClicked(item)">
                     <font-awesome-icon icon="fa-solid fa-trash" fixed-width />
                   </button>
 
-                  <button
-                    title="Info"
-                    class="btn btn-sm btn-light"
-                    @click="onInfoClicked(item)"
-                  >
+                  <button title="Info" class="btn btn-sm btn-light" @click="onInfoClicked(item)">
                     <font-awesome-icon icon="fa-solid fa-eye" />
-                  </button>
-                  <button
-                    title="APP"
-                    class="btn btn-sm btn-light"
-                    @click="createApp(item)"
-                  >
-                    <i class="bi bi-phone" :id="'phoneButton-' + item.id"></i>
                   </button>
                 </div>
               </template>
@@ -117,47 +71,27 @@
           <div class="row">
             <div class="col-15">
               <div class="row">
-                <div
-                  v-for="(item, index) in items"
-                  :key="index"
-                  class="mb-3 col-md-3"
-                  style="margin-bottom: 20px"
-                >
+                <div v-for="(item, index) in items" :key="index" class="mb-3 col-md-3" style="margin-bottom: 20px">
                   <div class="card" style="height: 100%; margin: -5px">
                     <div class="card-body">
                       <h4 class="text-center">id {{ item.id }}</h4>
 
-                      <button
-                        title="save"
-                        class="btn btn-sm btn-light text-danger text-center"
-                        style="position: absolute; top: 10px; right: 10px"
-                        @click="onSaveClicked(item)"
-                      >
-                        <i
-                          class="bi bi-heart"
-                          :id="'saveButton-' + item.id"
-                        ></i>
+                      <button title="save" class="btn btn-sm btn-light text-danger text-center"
+                        style="position: absolute; top: 10px; right: 10px" @click="onSaveClicked(item)">
+                        <i class="bi bi-heart" :id="'saveButton-' + item.id"></i>
                       </button>
-                      <div
-                        class="text-center"
-                        style="
+                      <div class="text-center" style="
                           border: 1px solid #999999;
                           width: 300px;
                           height: 300px;
                           margin: 0 auto;
                           margin-top: 15px;
-                        "
-                      >
-                        <img
-                          :src="imageurl"
-                          alt=""
-                          style="
+                        ">
+                        <img :src="imageurl" alt="" style="
                             max-width: 250px;
                             max-height: 250px;
                             margin-top: 15px;
-                          "
-                          :id="'photo-' + index"
-                        />
+                          " :id="'photo-' + index" />
                       </div>
                       <div class="text-center">
                         <h5 style="margin-top: 20px">
@@ -165,43 +99,15 @@
                           <i>{{ item.sgti }}</i>
                         </h5>
                         <div class="actions">
-                          <button
-                            title="edit"
-                            class="btn btn-sm btn-light"
-                            @click="onEditClicked(item)"
-                          >
-                            <font-awesome-icon
-                              icon="fa-solid fa-pencil"
-                              fixed-width
-                            />
+                          <button title="edit" class="btn btn-sm btn-light" @click="onEditClicked(item)">
+                            <font-awesome-icon icon="fa-solid fa-pencil" fixed-width />
                           </button>
 
-                          <button
-                            title="delete"
-                            class="btn btn-sm btn-light text-danger"
-                            @click="onDeleteClicked(item)"
-                          >
-                            <font-awesome-icon
-                              icon="fa-solid fa-trash"
-                              fixed-width
-                            />
+                          <button title="delete" class="btn btn-sm btn-light text-danger" @click="onDeleteClicked(item)">
+                            <font-awesome-icon icon="fa-solid fa-trash" fixed-width />
                           </button>
-                          <button
-                            title="Info"
-                            class="btn btn-sm btn-light"
-                            @click="onInfoClicked(item)"
-                          >
+                          <button title="Info" class="btn btn-sm btn-light" @click="onInfoClicked(item)">
                             <font-awesome-icon icon="fa-solid fa-eye" />
-                          </button>
-                          <button
-                            title="APP"
-                            class="btn btn-sm btn-light"
-                            @click="createApp(item)"
-                          >
-                            <i
-                              class="bi bi-phone"
-                              :id="'phoneButton-' + item.id"
-                            ></i>
                           </button>
                         </div>
                       </div>
@@ -214,79 +120,38 @@
         </div>
 
         <nav aria-label="...">
-          <ul
-            class="pagination"
-            style="display: flex; flex-wrap: wrap; justify-content: center"
-          >
-            <li
-              class="page-item"
-              @click="skipPage('first')"
-              :id="'before'"
-              v-if="totalPages > 0"
-            >
+          <ul class="pagination" style="display: flex; flex-wrap: wrap; justify-content: center">
+            <li class="page-item" @click="skipPage('first')" :id="'before'" v-if="totalPages > 0">
               <a class="page-link">First</a>
             </li>
-            <li
-              class="page-item"
-              @click="skipPage('substract')"
-              :id="''"
-              v-if="totalPages > 0"
-            >
+            <li class="page-item" @click="skipPage('substract')" :id="''" v-if="totalPages > 0">
               <a class="page-link" v-if="currentPage - 1 !== 0">
                 <span>{{ currentPage - 1 }}</span>
               </a>
             </li>
-            <li
-              class="page-item"
-              @click="skipPage('current')"
-              :id="'tablePage-'"
-              v-if="totalPages > 0"
-            >
+            <li class="page-item" @click="skipPage('current')" :id="'tablePage-'" v-if="totalPages > 0">
               <a class="page-link">{{ currentPage }}</a>
             </li>
-            <li
-              class="page-item"
-              @click="skipPage('pass')"
-              :id="'tablePage-'"
-              v-if="totalPages > 0"
-            >
+            <li class="page-item" @click="skipPage('pass')" :id="'tablePage-'" v-if="totalPages > 0">
               <a class="page-link" v-if="currentPage + 1 !== totalPages + 1">
-                {{ currentPage + 1 }}</a
-              >
+                {{ currentPage + 1 }}</a>
             </li>
 
-            <li
-              class="page-item"
-              @click="skipPage('last')"
-              :id="'tablePage-'"
-              v-if="totalPages > 0"
-            >
+            <li class="page-item" @click="skipPage('last')" :id="'tablePage-'" v-if="totalPages > 0">
               <a class="page-link">Last</a>
             </li>
           </ul>
         </nav>
       </div>
     </div>
-    <div
-      class="modal fade show"
-      id="ExtralargeModal"
-      tabindex="-1"
-      style="display: block"
-      aria-modal="true"
-      role="dialog"
-      v-if="showAlert"
-    >
+    <div class="modal fade show" id="ExtralargeModal" tabindex="-1" style="display: block" aria-modal="true" role="dialog"
+      v-if="showAlert">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Tipo de stampa</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              @click="closeAlert"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              @click="closeAlert"></button>
           </div>
           <div class="modal-body">
             <div class="row">
@@ -295,11 +160,7 @@
                 <div class="card cardSelector">
                   <div class="card-body">
                     <h5 class="card-title">Stampa sanitaria</h5>
-                    <img
-                      src="/sSanitaria.png"
-                      style="width: 100%"
-                      @click="printS(item)"
-                    />
+                    <img src="/sSanitaria.png" style="width: 100%" @click="printS(item)" />
                   </div>
                 </div>
               </div>
@@ -308,11 +169,7 @@
                 <div class="card cardSelector">
                   <div class="card-body">
                     <h5 class="card-title">Stampa prestito</h5>
-                    <img
-                      src="/sPrestito.png"
-                      style="width: 100%"
-                      @click="printP(item)"
-                    />
+                    <img src="/sPrestito.png" style="width: 100%" @click="printP(item)" />
                   </div>
                 </div>
               </div>
@@ -323,36 +180,23 @@
     </div>
     <Loaded v-if="!loaded" />
     <h1 class="text-center" v-if="noResult">Nessun risultato</h1>
-    <div class="d-flex gap-2">
-      <b-pagination
-        v-model="page2"
-        :perPage="limit2"
-        :totalItems="totalItems2"
-        size="sm"
-      />
-      <b-pagination-dropdown v-model="limit" :options="[5, 10, 25, 50, 100]" />
-    </div>
   </main>
 </template>
 
 <script>
 import { ref, computed, watch, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { directus } from "../../API/";
-import * as settings from "../../settings/";
-import Table from "../common/Table/Table.vue";
-import Loaded from "../common/Loader.vue";
-import searchForm from "./searchForm.vue";
+import { directus } from "../../../API/";
+import * as settings from "../../../settings/";
+import Table from "../../common/Table/Table.vue";
+import Loaded from "../../common/Loader.vue";
+import searchForm from "./searchForm.vue"
 export default {
   components: { Table, Loaded, searchForm },
   setup() {
     const route = useRoute();
     const router = useRouter();
     const modal = inject("$modalManager");
-
-    const page2 = ref(1);
-    const limit2 = ref(10);
-    const totalItems2 = ref(0);
 
     const collection = [];
     const items = ref(null);
@@ -370,7 +214,7 @@ export default {
     const counter = ref(0);
     const loaded = ref(true);
     const image = ref();
-    let noResult = ref(false);
+    let noResult = ref(false)
     // watch the route and update data based on the collection param
     watch(
       route,
@@ -404,7 +248,7 @@ export default {
 
         totalResult.value = itemsFiltered.data.length;
         totalPages.value = Math.ceil(totalResult.value / resultLimit);
-      } catch (error) {}
+      } catch (error) { }
       skipPage("first");
     }
 
@@ -441,15 +285,11 @@ export default {
       let resultInv = document.getElementById("resultInv").value;
       let resultMTC = document.getElementById("resultMTC").value;
       let sti_tipo = document.getElementById("sti_tipo").value;
-      let resultCollezione = document.getElementById("resultCollezione").value;
-      let resultCDGS = document.getElementById("resultCDGS").value;
       let resultACQN = document.getElementById("resultACQN").value;
       let resti = document.getElementById("resti").checked;
       let deposito = document.getElementById("deposito").checked;
-      let inMuseo = document.getElementById("inMuseo").checked;
 
-      // let acqnCheckbox = document.getElementById("acqnCheckbox").checked;
-      let resultRSTN = document.getElementById("resultRSTN").value;
+      let acqnCheckbox =document.getElementById("acqnCheckbox").checked;
 
       counter.value = 0;
       loaded.value = false;
@@ -557,22 +397,29 @@ export default {
         }
 
         if (resultACQN !== "") {
-          // if (acqnCheckbox == true) {
-          //   query["filter"]["acqn"] = { _ncontains: resultACQN };
-          // } else {
-          query["filter"]["acqn"] = { _contains: resultACQN };
-          // }
+          if(acqnCheckbox==true){
+            query["filter"]["acqn"] = { _ncontains: resultACQN };
+
+          }else{
+            query["filter"]["acqn"] = { _contains: resultACQN };
+
+          }
+
         }
         if (resti !== false) {
+       
           query["filter"]["resti"] = { _eq: true };
+
         }
-        if (deposito !== false) {
-          query["filter"]["deposito"] = { _eq: false };
-        }
-        if (inMuseo !== false) {
-          query["filter"]["in_museo"] = { _eq: true };
+         if (deposito !== false) {
+       
+          query["filter"]["resti"] = { _eq: false };
+
         }
         if (sti_tipo !== "") {
+
+
+
           const privateData = await directus.items("sti_tipo").readByQuery({
             filter: {
               sti_tipo: { _eq: sti_tipo },
@@ -599,60 +446,11 @@ export default {
             _in: idFinalStima,
           };
         }
-        if (resultRSTN !== "") {
-          const privateData = await directus.items("rstn").readByQuery({
-            filter: {
-              rstn: { _contains: resultRSTN },
-            },
-            limit: -1,
-          });
-          const idrstn = privateData.data.map(({ id }) => id);
-          const privateDataRestauro = await directus
-            .items("restauro")
-            .readByQuery({
-              filter: {
-                rstn: { _in: idrstn },
-              },
-              limit: -1,
-            });
-          const idrestauro = privateDataRestauro.data.map(({ id }) => id);
 
-          const opereRestauro = await directus
-            .items("opera_restauro_1")
-            .readByQuery({
-              filter: {
-                restauro_id: { _in: idrestauro },
-              },
-              limit: -1,
-            });
-
-          const idOpereRestauro = opereRestauro.data.map(
-            ({ opera_id }) => opera_id
-          );
-          query["filter"]["restauro"] = {
-            _in: idOpereRestauro,
-          };
-        }
-        if (resultCDGS !== "") {
-          query["filter"]["cdgs"] = { _contains: resultCDGS };
-        }
-        if (resultCollezione !== "") {
-          const response = await directus.items("collezione").readByQuery({
-            filter: {
-              collezione: { _eq: resultCollezione },
-            },
-            limit: -1,
-          });
-          const idCollezione = response.data.map(({ id }) => id);
-          query["filter"]["collezione"] = {
-            _in: idCollezione,
-          };
-        }
 
         const response = await directus
           .items(collection.value)
           .readByQuery(query);
-
         itemsFiltered = response;
         const { data = [] } = response;
         if (data.length < 1) {
@@ -661,10 +459,8 @@ export default {
           loaded.value = true;
 
           items.value = data;
-          noResult.value = false;
+          noResult.value = false
 
-          totalItems2.value = items.value.length;
-          console.log(totalItems2.value);
         }
       } catch (error) {
         items.value = null;
@@ -672,7 +468,8 @@ export default {
       // SAVED ITEMS
       if (items.value == null) {
         loaded.value = true;
-        noResult.value = true;
+        noResult.value = true
+
       }
       infoQty();
     }
@@ -719,7 +516,7 @@ export default {
           });
           try {
             items.value[counter.value].autore = autoreNames;
-          } catch (error) {}
+          } catch (error) { }
 
           counter.value++;
         }
@@ -761,7 +558,7 @@ export default {
         }
         try {
           // items.value[counter.value].inv = inventarioNames;
-        } catch (error) {}
+        } catch (error) { }
 
         counter.value++;
       });
@@ -804,10 +601,9 @@ export default {
 
           counter.value++;
         });
-      } catch (error) {}
+      } catch (error) { }
     }
     async function fetchIcons() {
-      // SAVE BUTTON
       me.value = await directus.users.me.read();
 
       let query2 = {
@@ -827,19 +623,7 @@ export default {
           );
 
           iconSaved.className = "bi bi-heart-fill";
-        } catch (error) {}
-      }
-      // PHONE BUTTON
-      for (let index = 0; index < items.value.length; index++) {
-        if (items.value[index].app !== null) {
-          try {
-            let iconPhone = document.getElementById(
-              "phoneButton-" + items.value[index].id
-            );
-
-            iconPhone.className = "bi bi-phone-fill";
-          } catch (error) {}
-        }
+        } catch (error) { }
       }
     }
     function clearData() {
@@ -851,16 +635,10 @@ export default {
       document.getElementById("resultInv").value = null;
       document.getElementById("resultMTC").value = null;
       document.getElementById("sti_tipo").value = null;
-      document.getElementById("resultCollezione").value = null;
-      document.getElementById("resultCDGS").value = null;
       document.getElementById("resultACQN").value = null;
-      document.getElementById("resti").checked = false;
-      document.getElementById("deposito").checked = false;
-      document.getElementById("inMuseo").checked = false;
-
-      // document.getElementById("acqnCheckbox").checked = false;
-      document.getElementById("resultRSTN").value = null;
-
+      document.getElementById("resti").checked = false
+      document.getElementById("deposito").checked = false
+      document.getElementById("acqnCheckbox").checked = false
       totalResult.value = 0;
       totalPages.value = 0;
       url.value = window.location.origin;
@@ -892,7 +670,6 @@ export default {
       currentItem.value = item;
       showAlert.value = true;
     }
-
     async function onSaveClicked(item) {
       let iconSaved = document.getElementById("saveButton-" + item.id);
       if (iconSaved.classList.contains("bi-heart")) {
@@ -942,168 +719,6 @@ export default {
         params: { id: currentItem.value.id, collection: "opera" },
       });
     }
-
-    async function createApp(item) {
-      let iconPhone = document.getElementById("phoneButton-" + item.id);
-      if (iconPhone.classList.contains("bi-phone")) {
-        const opereMtc = await directus.items("opera_mtc").readByQuery({
-          filter: {
-            id: { _in: item.mtc },
-          },
-          limit: -1,
-        });
-        const idOpereMTC = opereMtc.data.map(({ mtc_id }) => mtc_id);
-
-        const mtcValueApp = await directus.items("mtc").readByQuery({
-          filter: {
-            id: { _in: idOpereMTC },
-          },
-          limit: -1,
-        });
-        let mtcAPP = "";
-        for (let index = 0; index < mtcValueApp.data.length; index++) {
-          mtcAPP += mtcValueApp.data[index].mtc + ". ";
-        }
-
-        iconPhone.className = "bi bi-phone-fill";
-        const MyItem = await directus.items("opera").readByQuery({
-          filter: {
-            id: { _eq: item.id },
-          },
-          limit: -1,
-        });
-        // TAKE AUTORE INFO
-        let autaValues = "";
-        let autsID = [];
-        let autsValues = "";
-
-        try {
-          const autoreOpera = await directus.items("opera_autore").readByQuery({
-            filter: {
-              id: { _in: MyItem.data[0].autore },
-            },
-            limit: -1,
-          });
-
-          const autoreIds = autoreOpera.data.map((item) => item.autore_id);
-          const autores = await directus.items("autore").readByQuery({
-            filter: {
-              id: { _in: autoreIds },
-            },
-            limit: -1,
-          });
-
-          for (let index = 0; index < autores.data.length; index++) {
-            autaValues += autores.data[index].auta + ".";
-            autsID.push(autores.data[index].auts);
-          }
-          const autsAutore = await directus.items("auts").readByQuery({
-            filter: {
-              id: { _in: autsID },
-            },
-            limit: -1,
-          });
-
-          for (let index = 0; index < autsAutore.data.length; index++) {
-            autsValues += autsAutore.data[index].auts + " ";
-          }
-        } catch (error) {
-          autaValues = "";
-          autsValues = "";
-          item.autore = "";
-        }
-        // COLLEZIONE
-        let appCollection;
-        try {
-          const collezione = await directus.items("collezione").readByQuery({
-            filter: {
-              id: { _eq: item.collezione },
-            },
-            limit: -1,
-          });
-          appCollection = collezione.data[0].collezione;
-        } catch (error) {
-          appCollection = "";
-        }
-        // Localizzazione
-
-        let tclFinal = "";
-        let prvcFinal = "";
-        let prcdFinal = "";
-        try {
-          const locIDS = MyItem.data.map((item) => item.localizzazione);
-
-          const locOpera = await directus
-            .items("opera_localizzazione")
-            .readByQuery({
-              filter: {
-                id: { _in: locIDS },
-              },
-              limit: -1,
-            });
-          const locFinalId = locOpera.data.map(
-            (item) => item.localizzazione_id
-          );
-          const localizzazioneFinal = await directus
-            .items("localizzazione")
-            .readByQuery({
-              filter: {
-                id: { _in: locFinalId },
-              },
-              limit: -1,
-            });
-          for (
-            let index = 0;
-            index < localizzazioneFinal.data.length;
-            index++
-          ) {
-            prcdFinal += localizzazioneFinal.data[index].prcd + ". ";
-
-            const prvcResult = await directus.items("prvc").readByQuery({
-              filter: {
-                id: { _in: localizzazioneFinal.data[index].prvc },
-              },
-              limit: -1,
-            });
-            for (let index = 0; index < prvcResult.data.length; index++) {
-              prvcFinal += prvcResult.data[index].prvc + ". ";
-            }
-
-            const tclResult = await directus.items("tcl").readByQuery({
-              filter: {
-                id: { _in: localizzazioneFinal.data[index].tcl },
-              },
-              limit: -1,
-            });
-            for (let index = 0; index < tclResult.data.length; index++) {
-              tclFinal += tclResult.data[index].tcl + ". ";
-            }
-          }
-        } catch (error) {}
-        const response2 = await directus.items("app").createOne({
-          icona: item.icona,
-          invn: item.invn,
-          autn: item.autore,
-          auta: autaValues,
-          auts: autsValues,
-          collezione: appCollection,
-          ogtd: item.ogtd,
-          piano: item.piano,
-          materia: mtcAPP,
-          prcd: prcdFinal,
-          prvc: prvcFinal,
-          tcl: tclFinal,
-          sala: item.sala,
-          parete: item.parete,
-          sgti: item.sgti,
-          descrizione: item.descrizione_breve,
-          specifiche: item.specifiche,
-        });
-        const response = await directus
-          .items("opera")
-          .updateOne(item.id, { app: response2.id });
-      }
-    }
     return {
       items,
       fields,
@@ -1128,7 +743,6 @@ export default {
       printS,
       printP,
       printInfo,
-      createApp,
     };
   },
 };

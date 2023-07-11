@@ -64,7 +64,6 @@ export default {
         async save(data) {
             try {
                 const response = await directus.items(collection).updateOne(this.id, data)
-                // console.log(response)
                 alert('saved successfully')
                 this.goToList()
             } catch (error) {
