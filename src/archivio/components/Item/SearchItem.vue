@@ -820,7 +820,6 @@ async function fetchData(settings) {
       query["filter"]["deposito"] = { _eq: true };
     }
     if (form.value.esposta !== false) {
-      query["filter"]["deposito"] = { _eq: false };
       query["filter"]["in_museo"] = { _eq: true };
     }
     if (form.value.esposta !== false && form.value.deposito !== false) {

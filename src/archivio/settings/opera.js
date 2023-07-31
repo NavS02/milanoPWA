@@ -105,7 +105,7 @@ export default {
 
       new FormField({
         name: "resti",
-        label: "Restituite",
+        label: "Opera restituita",
         type: "toggle",
         value: "",
         column: "2",
@@ -610,14 +610,14 @@ export default {
       }),
       new FormField({
         name: "deposito",
-        label: "Deposito",
+        label: "Opera in deposito",
         type: "toggle",
         value: "",
         column: "2",
       }),
       new FormField({
         name: "in_museo",
-        label: "In museo",
+        label: "Opera esposta",
         type: "toggle",
         value: "",
         column: "2",
@@ -1030,7 +1030,7 @@ export default {
       }),
       new FormField({
         name: "cdgs",
-        label: "Indicazione specifica",
+        label: "Proprietà - Indicazione specifica",
         type: "text",
         defaultValue: null,
         column: "4",
@@ -1046,7 +1046,7 @@ export default {
       //acquisizione
       new ManyToOneField({
         name: "acqt",
-        label: "Tipo Acquisizione",
+        label: "Proprietà - Tipo Acquisizione",
         value: null,
         related: "acqt",
         type: "manyToOne",
