@@ -7,6 +7,7 @@ import {
     RadioField,
     ManyToOneField,
     File,
+    Files,
     Image,
   } from "../../models";
   
@@ -56,7 +57,8 @@ export default {
             new FormField({ name: 'rsdu', label: 'Uscita', type: 'text', value: '' }),
             new FormField({ name: 'rsdr', label: 'Ente finanziatore', type: 'text', value: '' }),
             new FormField({ name: 'rstnote', label: 'Note', type: 'text', value: '' }),
-
+            new Files({ name: 'files', label: 'Files allegati', foreign_key:'directus_files_id', value:[],
+            fit: 'contain', width: 100, height: 100, quality: 80,column:4 }),
             
         ]
     },

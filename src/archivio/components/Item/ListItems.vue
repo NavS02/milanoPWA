@@ -6,7 +6,7 @@
         custom
         v-slot="{ isActive, href, navigate }"
       >
-        <button class="btn btn-sm btn-primary" @click="navigate">
+        <button class="btn btn-sm btn-primary" @click="navigate" v-if="collection !== 'app'">
           <font-awesome-icon icon="fa-solid fa-plus" fixed-width />
           <span class="ms-1">New</span>
         </button>
@@ -74,11 +74,9 @@ const totalItems = computed(() => metadata.value?.filter_count);
 const totalPages = computed(() =>
   Math.ceil(metadata.value?.filter_count / limit.value)
 );
-
 const props = defineProps({
   collection: { type: String, default: "" },
 });
-
 const route = useRoute();
 const router = useRouter();
 // infer the collection from the route
@@ -152,7 +150,7 @@ async function deleteItem(item) {
   fetchData();
 }
 
-function onEditClicked(item) {
+async function onEditClicked(item) {
   router.push({
     name: "editItemArc",
     params: { id: item.id, collection: collection.value },
@@ -160,7 +158,7 @@ function onEditClicked(item) {
 }
 
 async function onDeleteClicked(item) {
-  if (collection  .value == "app") {
+  if (collection.value == "app") {
     let query = {
       limit: 1,
       filter: {

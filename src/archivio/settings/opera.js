@@ -314,10 +314,11 @@ export default {
       new FormField({
         name: "descrizione_breve",
         label: "Descrizione breve",
-        type: "textarea",
+        type: "richtext",
         defaultValue: null,
         column: "12",
       }),
+  
       /* cronologia */
 
       new ManyToManyField({
@@ -357,13 +358,7 @@ export default {
           return { mtc: { _contains: text } };
         },
       }),
-      new FormField({
-        name: "oss",
-        label: "Osservazioni",
-        type: "textarea",
-        defaultValue: null,
-        column: "12",
-      }),
+    
       new Divider({ type: "divider" }),
 
       new FormField({
@@ -649,16 +644,16 @@ export default {
         column: "3",
         options: [
           { value: "", label: "" },
-          { value: "Corridoio centrale", label: "Corridoio centrale" },
-          { value: "Sala dell’Arciconfraternita", label: "Sala dell’Arciconfraternita" },
-          { value: "Sala Fontana", label: " Sala Fontana" },
-          { value: "Crociera", label: "Crociera" },
-          { value: "Scalone", label: "Scalone" },
-          { value: "Corridoio centrale", label: "Corridoio centrale" },
-          { value: "Corridoio laterale sinistro", label: "Corridoio laterale sinistro" },
-          { value: "Corridoio laterale destro", label: "Corridoio laterale destro" },
-          { value: "Sala fondi oro", label: "Sala fondi oro" },
-          { value: "Sala Marcenaro", label: "Sala Marcenaro" },
+          { value: "Corridoio centrale", label: "Corridoio centrale" ,piano:'terra'},
+          { value: "Sala dell’Arciconfraternita", label: "Sala dell’Arciconfraternita",piano:'terra' },
+          { value: "Sala Fontana", label: " Sala Fontana",piano:'terra' },
+          { value: "Crociera", label: "Crociera" ,piano:'terra'},
+          { value: "Scalone", label: "Scalone" ,piano:'primo'},
+          { value: "Corridoio centrale", label: "Corridoio centrale" ,piano:'primo'},
+          { value: "Corridoio laterale sinistro", label: "Corridoio laterale sinistro",piano:'primo' },
+          { value: "Corridoio laterale destro", label: "Corridoio laterale destro" ,piano:'primo'},
+          { value: "Sala fondi oro", label: "Sala fondi oro",piano:'primo' },
+          { value: "Sala Marcenaro", label: "Sala Marcenaro" ,piano:'primo'},
 
 
         ],
@@ -741,7 +736,7 @@ export default {
           return { rstd: { _contains: text } };
         },
       }),
-
+    
 
       //Compilazione
       new Divider({ type: "divider" }),
@@ -802,7 +797,7 @@ export default {
 
       new ManyToManyField({
         name: "localizzazione",
-        label: "Localizzazione",
+        label: "Provenienza",
         value: [],
         related: "localizzazione",
         foreign_key: "localizzazione_id",
@@ -881,7 +876,7 @@ export default {
         related: "collezione",
         type: "manyToOne",
         column: "4",
-        voc: "open",
+        voc: "close",
         preview: (item) => {
           return `${item?.collezione}`;
         },
@@ -1018,7 +1013,7 @@ export default {
       //cdgg
       new ManyToOneField({
         name: "cdgg",
-        label: "Indicazione generica",
+        label: "Proprietà - Indicazione generica",
         value: null,
         related: "cdgg",
         type: "manyToOne",
@@ -1088,7 +1083,13 @@ export default {
         defaultValue: null,
         column: "3",
       }),
-
+      new FormField({
+        name: "oss",
+        label: "Osservazioni",
+        type: "textarea",
+        defaultValue: null,
+        column: "12",
+      }),
       //Compilazione
       new Divider({ type: "divider" }),
 

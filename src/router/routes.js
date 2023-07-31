@@ -23,6 +23,9 @@ import modelSan from "../archivio/components/Item/PrintItem/modelSan.vue";
 import modelPres from "../archivio/components/Item/PrintItem/modelPres.vue";
 import CreateItem from "../archivio/components/Item/CreateItem.vue";
 
+
+import ItemsMap from '../archivio/components/Item/ItemsMap.vue'
+
 const routes = [
   { path: "/login/:program", name: "login", component: Login, props: true },
   { path: "", name: "home", component: Home, props: true },
@@ -41,6 +44,13 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
+        path: "/archivio/touchscreen/map",
+        name: "ItemsMap",
+        component: ItemsMap,
+        meta: { requiresAuth: true },
+      },
+     
+      {
         path: "/archivio/:collection",
         name: "listArc",
         component: ListItemsArc,
@@ -48,7 +58,7 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: "/archivio/search",
+        path: "/archivio/search/:piano",
         name: "searchArc",
         component: searchArc,
         props: true,

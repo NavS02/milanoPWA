@@ -4,11 +4,6 @@ import User from '../pages/User.vue'
 import Notes from '../pages/Notes.vue'
 import PageNotFound from '../pages/PageNotFound.vue'
 
-// autori
-import Autori from '../pages/Autori.vue'
-import ListAutori from '../components/Autore/ListAutori.vue'
-import CreateAutore from '../components/Autore/CreateAutore.vue'
-import EditAutore from '../components/Autore/EditAutore.vue'
 
 // authentication
 import Login from '../pages/Login.vue'
@@ -23,8 +18,9 @@ import EditItem from '../components/Item/EditItem.vue'
 import InfoItem from '../components/Item/InfoItem.vue'
 import SearchItem from '../components/Item/SearchItem.vue'
 import model1 from '../components/Item//PrintItem/model1.vue'
-// app
-import SearchApp from '../components/Item/Searchapp/SearchItem.vue'
+
+//  touchscreen
+import ItemsMap from '../components/Item/ItemsMap.vue'
 
 
 const routes = [
@@ -33,6 +29,8 @@ const routes = [
         { path: '/profile',  name: 'user', component: User ,meta: { requiresAuth: true } },
         { path: '/notes',  name: 'notes', component: Notes, meta: { requiresAuth: true }  },
         { path: '/items/search', name: 'SearchItem', component: SearchItem,meta: { requiresAuth: true }, props: false, },
+        { path: '/touchscreen/map', name: 'ItemsMap', component: ItemsMap,meta: { requiresAuth: true }, props: false, },
+        
         { path: '/items/:collection', component: Items, children: [
             { path: '', name: 'listItems', component: ListItems },
             { path: 'create', name: 'createItem', component: CreateItem, props: true, },

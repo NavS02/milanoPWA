@@ -131,7 +131,7 @@ export default {
       new FormField({
         name: "descrizione",
         label: "Descrizione",
-        type: "textarea",
+        type: "richtext",
         value: "",
         edit: "false",
       }),
@@ -222,8 +222,9 @@ export default {
   tableFields() {
     return [
       { key: "id", label: "ID \t", sortable: true },
+      { key: "id_opera", label: "ID Opera", sortable: true },
       { key: "titolo", label: "Titolo", sortable: true },
-      { key: "autn", label: "Autore", sortable: true },
+      { key: "autore", label: "Autore", sortable: true },
       { key: "sgti", label: "Soggetto", sortable: true },
       { key: "actions", label: "Azione", sortable: false },
     ];

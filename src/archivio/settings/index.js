@@ -67,3 +67,6 @@ export { default as collocazione } from './collocazione'
 // APP
 export { default as app } from './app/app'
 
+// TOUCHSCREEN
+export { default as touch } from './touch/touch'
+

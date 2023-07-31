@@ -4,6 +4,13 @@
       <div class="mb-2">
         <ItemsNavigation :collection="collection" :id="id" />
       </div>
+      <div
+        class="succesAlert alert alert-success"
+        role="alert"
+        v-if="showAlert"
+      >
+        Scheda n. {{ id }} salvata!
+      </div>
       <h2 class="text-center">Scheda n. {{ id }}</h2>
       <img :src="url" alt="" class="center" style="width: 15%" id="my-image" />
       <br />
@@ -59,7 +66,7 @@ const router = useRouter();
 const image = ref();
 const loaded = ref(false);
 const fields = ref([]); // fields settings
-
+const showAlert = ref(false);
 // watch the route and update data based on the collection param
 watch(
   route,
@@ -101,7 +108,7 @@ function onSaveClicked(data) {
   save(data());
 }
 function goToList() {
-  router.push({ name: "listArc", params: { collection: collection.value } });
+  router.push({ name: "searchArc", params: { piano: "all" } });
 }
 
 async function onEditOpera(id) {
@@ -129,7 +136,10 @@ async function save(data) {
     const response = await directus
       .items(collection.value)
       .updateOne(id.value, data);
-    goToList();
+    // ALERT
+    showAlert.value = true;
+ setTimeout(function() { showAlert.value = false;}, 3000)
+
   } catch (error) {
     console.error(error);
     toaster.toast({ title: "Error", body: error }, "top right");
@@ -179,5 +189,12 @@ async function fecthImage() {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+.succesAlert {
+  width: 25%;
+  text-align: center;
+ 
+ position: fixed;
+  right: 0;
 }
 </style>
