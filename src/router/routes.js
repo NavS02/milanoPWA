@@ -21,6 +21,8 @@ import InfoItemArch from "../archivio/components/Item/InfoItem.vue";
 import modelFav from "../archivio/components/Item/PrintItem/modelFav.vue";
 import modelSan from "../archivio/components/Item/PrintItem/modelSan.vue";
 import modelPres from "../archivio/components/Item/PrintItem/modelPres.vue";
+import printItem from "../archivio/components/Item/PrintItem/printItem.vue";
+
 import CreateItem from "../archivio/components/Item/CreateItem.vue";
 
 
@@ -110,6 +112,13 @@ const routes = [
         component: modelPres,
         props: true,
       },
+      {
+        path: "/archivio/print/printItem/:id",
+        name: "printItem",
+        component: printItem,
+        props: true,
+      },
+      
       {
         path: "/archivio/print/:collection/create",
         name: "CreateArc",

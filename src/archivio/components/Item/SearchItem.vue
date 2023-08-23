@@ -1,5 +1,6 @@
 <template>
   <main id="main" class="main">
+    <!-- FORM WITH SARCH INPUTS -->
     <div class="col-12">
       <div class="row">
         <div class="col-md-6">
@@ -216,15 +217,7 @@
         Annulla
       </button>
       <hr />
-      <!-- Mostra:
-      <input
-        type="number"
-        aria-label="Small"
-        aria-describedby="inputGroup-sizing-sm"
-        value="50"
-        id="limit"
-        @input="infoQty()"
-      /> -->
+      <!-- DROPDOWN WITH PAGINATION CONFIG -->
       <div class="btn-group">
         <button
           type="button"
@@ -284,6 +277,7 @@
             <header class="mb-2"></header>
           </div>
         </div>
+        <!-- TABLE WITH RESULTS -->
         <div class="card-body" v-if="selectedInterface === 'list'">
           <div class="table-responsive">
             <Table
@@ -331,12 +325,19 @@
                   >
                     <i class="bi bi-phone" :id="'phoneButton-' + item.id"></i>
                   </button>
+                  <button
+                    title="TouchScreen"
+                    class="btn btn-sm btn-light"
+                    @click="createTouch(item)"
+                  >
+                    <i class="bi bi-map" :id="'touchButton-' + item.id"></i>
+                  </button>
                 </div>
               </template>
             </Table>
           </div>
         </div>
-
+        <!-- CARDS WITH ITEMS -->
         <div class="card-body" v-if="selectedInterface === 'card'">
           <div class="row">
             <div class="col-15">
@@ -425,6 +426,16 @@
                             <i
                               class="bi bi-phone"
                               :id="'phoneButton-' + item.id"
+                            ></i>
+                          </button>
+                          <button
+                            title="TouchScreen"
+                            class="btn btn-sm btn-light"
+                            @click="createTouch(item)"
+                          >
+                            <i
+                              class="bi bi-map"
+                              :id="'touchButton-' + item.id"
                             ></i>
                           </button>
                         </div>
@@ -516,7 +527,7 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <!-- First print type -->
                 <div class="card cardSelector">
                   <div class="card-body">
@@ -529,7 +540,20 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
+                <!-- Second print type -->
+                <div class="card cardSelector">
+                  <div class="card-body">
+                    <h5 class="card-title">Stampa scheda</h5>
+                    <img
+                      src="/sInfo.png"
+                      style="width: 100%"
+                      @click="printScheda(item)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
                 <!-- Second print type -->
                 <div class="card cardSelector">
                   <div class="card-body">
@@ -542,6 +566,7 @@
                   </div>
                 </div>
               </div>
+               
             </div>
           </div>
         </div>
@@ -714,7 +739,7 @@ async function fetchData(settings) {
   let query = {
     limit: -1,
     filter: {},
-    fields: "id,invn,autore,ogtd,sgti,ldcs,app,icona",
+    fields: "id,invn,autore,ogtd,sgti,ldcs,app,touch,icona",
   };
   if (piano.value !== "all" && settings !== "all") {
     query["filter"]["piano"] = { _eq: piano.value };
@@ -1080,6 +1105,21 @@ async function fetchIcons() {
       } catch (error) {}
     }
   }
+  // TOUCHSCREEN BUTTON
+  for (let index = 0; index < items.value.length; index++) {
+    if (
+      items.value[index].touch !== null &&
+      items.value[index].touch !== undefined
+    ) {
+      try {
+        let iconTouch = document.getElementById(
+          "touchButton-" + items.value[index].id
+        );
+
+        iconTouch.className = "bi bi-map-fill";
+      } catch (error) {}
+    }
+  }
 }
 
 function clearData() {
@@ -1161,10 +1201,10 @@ function printP() {
     params: { id: currentItem.value.id },
   });
 }
-function printInfo() {
+function printScheda() {
   router.push({
-    name: "InfoItemArch",
-    params: { id: currentItem.value.id, collection: "opera" },
+    name: "printItem",
+    params: { id: currentItem.value.id, },
   });
 }
 
@@ -1329,6 +1369,30 @@ async function createApp(itemSelected) {
     const response = await directus
       .items("opera")
       .updateOne(item.id, { app: response2.id });
+  }
+}
+async function createTouch(itemSelected) {
+  const Myitem = await directus.items("opera").readByQuery({
+    filter: {
+      id: { _eq: itemSelected.id },
+    },
+    limit: -1,
+  });
+  let item = Myitem.data[0];
+  console.log(item);
+  let iconTouch = document.getElementById("touchButton-" + item.id);
+  if (iconTouch.classList.contains("bi-map")) {
+    iconTouch.className = "bi bi-map-fill";
+
+    const response2 = await directus.items("touch").createOne({
+      icona: item.icona,
+      titolo: item.sgtt,
+      descrizione: item.descrizione_breve,
+      id_opera: item.id,
+    });
+    const response = await directus
+      .items("opera")
+      .updateOne(item.id, { touch: response2.id });
   }
 }
 </script>

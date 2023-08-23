@@ -1,9 +1,11 @@
 <template>
   <main id="main" class="main">
     <div v-if="loaded">
+      <!-- NAVIGATION PANEL -->
       <div class="mb-2">
         <ItemsNavigation :collection="collection" :id="id" />
       </div>
+      <!-- SAVE ALERT! -->
       <div
         class="succesAlert alert alert-success"
         role="alert"
@@ -15,6 +17,7 @@
       <img :src="url" alt="" class="center" style="width: 15%" id="my-image" />
       <br />
       <hr />
+      <!-- FORM WITH THE DATA -->
       <Form :fields="fields">
         <template v-slot:footer="{ data, fields }">
           <div class="buttons">
@@ -29,7 +32,7 @@
             <button
               class="btn btn-sm btn-warning"
               @click="onEditOpera(id)"
-              v-if="collection === 'app'"
+              v-if="collection === 'app' || collection === 'touch'"
             >
               <font-awesome-icon :icon="['fa-solid', 'fa-paintbrush']" />
               <span class="ms-1">Edita Opera</span>
@@ -112,15 +115,26 @@ function goToList() {
 }
 
 async function onEditOpera(id) {
-  let query = {
+// IF THE ITEM IS ( APP || TOUCHSCREEN ) DELETE THE RELATION IN THE OPERA
+  if (collection.value == "app") {
+    var query = {
+      limit: 1,
+      filter: {
+        app: {
+          _eq: id,
+        },
+      },
+    };
+  } else if (collection.value == "touch") {
+     var query = {
     limit: 1,
     filter: {
-      app: {
+      touch: {
         _eq: id,
       },
     },
   };
-
+  }
   let response = await directus.items("opera").readByQuery(query);
   router
     .push({
@@ -136,15 +150,180 @@ async function save(data) {
     const response = await directus
       .items(collection.value)
       .updateOne(id.value, data);
+    if (collection.value == "opera") {
+      updateAPP();
+    }
     // ALERT
     showAlert.value = true;
- setTimeout(function() { showAlert.value = false;}, 3000)
-
+    setTimeout(function () {
+      showAlert.value = false;
+    }, 3000);
   } catch (error) {
     console.error(error);
     toaster.toast({ title: "Error", body: error }, "top right");
   }
 }
+// WHEN THE OPERA IS SAVED EDIT THE INFO IN THE APP
+async function updateAPP() {
+  const Myitem = await directus.items("opera").readByQuery({
+    filter: {
+      id: { _eq: id.value },
+    },
+    limit: -1,
+  });
+  let item = Myitem.data[0];
+  const opereMtc = await directus.items("opera_mtc").readByQuery({
+    filter: {
+      id: { _in: item.mtc },
+    },
+    limit: -1,
+  });
+  const idOpereMTC = opereMtc.data.map(({ mtc_id }) => mtc_id);
+
+  const mtcValueApp = await directus.items("mtc").readByQuery({
+    filter: {
+      id: { _in: idOpereMTC },
+    },
+    limit: -1,
+  });
+  let mtcAPP = "";
+  for (let index = 0; index < mtcValueApp.data.length; index++) {
+    mtcAPP += mtcValueApp.data[index].mtc + " ";
+  }
+
+  // TAKE AUTORE INFO
+  let autaValues = "";
+  let autsID = [];
+  let autsValues = "";
+  let autnValues = "";
+
+  try {
+    const autoreOpera = await directus.items("opera_autore").readByQuery({
+      filter: {
+        id: { _in: item.autore },
+      },
+      limit: -1,
+    });
+
+    const autoreIds = autoreOpera.data.map((item) => item.autore_id);
+    const autores = await directus.items("autore").readByQuery({
+      filter: {
+        id: { _in: autoreIds },
+      },
+      limit: -1,
+    });
+
+    for (let index = 0; index < autores.data.length; index++) {
+      autaValues += autores.data[index].auta + " ";
+      autnValues += autores.data[index].autn + " ";
+
+      autsID.push(autores.data[index].auts);
+    }
+    const autsAutore = await directus.items("auts").readByQuery({
+      filter: {
+        id: { _in: autsID },
+      },
+      limit: -1,
+    });
+
+    for (let index = 0; index < autsAutore.data.length; index++) {
+      autsValues += autsAutore.data[index].auts + " ";
+    }
+  } catch (error) {
+    autaValues = "";
+    autsValues = "";
+    item.autore = "";
+    autnValues = "";
+  }
+  // COLLEZIONE
+  let appCollection;
+  try {
+    const collezione = await directus.items("collezione").readByQuery({
+      filter: {
+        id: { _eq: item.collezione },
+      },
+      limit: -1,
+    });
+    appCollection = collezione.data[0].collezione;
+  } catch (error) {
+    appCollection = "";
+  }
+  // Localizzazione
+
+  let tclFinal = "";
+  let prvcFinal = "";
+  let prcdFinal = "";
+  try {
+    const locIDS = MyItem.data.map((item) => item.localizzazione);
+
+    const locOpera = await directus.items("opera_localizzazione").readByQuery({
+      filter: {
+        id: { _in: locIDS },
+      },
+      limit: -1,
+    });
+    const locFinalId = locOpera.data.map((item) => item.localizzazione_id);
+    const localizzazioneFinal = await directus
+      .items("localizzazione")
+      .readByQuery({
+        filter: {
+          id: { _in: locFinalId },
+        },
+        limit: -1,
+      });
+    for (let index = 0; index < localizzazioneFinal.data.length; index++) {
+      prcdFinal += localizzazioneFinal.data[index].prcd + " ";
+
+      const prvcResult = await directus.items("prvc").readByQuery({
+        filter: {
+          id: { _in: localizzazioneFinal.data[index].prvc },
+        },
+        limit: -1,
+      });
+      for (let index = 0; index < prvcResult.data.length; index++) {
+        prvcFinal += prvcResult.data[index].prvc + " ";
+      }
+
+      const tclResult = await directus.items("tcl").readByQuery({
+        filter: {
+          id: { _in: localizzazioneFinal.data[index].tcl },
+        },
+        limit: -1,
+      });
+      for (let index = 0; index < tclResult.data.length; index++) {
+        tclFinal += tclResult.data[index].tcl + " ";
+      }
+    }
+  } catch (error) {}
+  // OGTD
+  const ogtdData = await directus.items("ogtd").readByQuery({
+    filter: {
+      id: { _eq: item.ogtd },
+    },
+    limit: -1,
+  });
+  let ogtdNames = ogtdData.data[0].ogtd;
+  const response2 = await directus.items("app").updateOne(item.app, {
+    icona: item.icona,
+    invn: item.invn,
+    autn: autnValues,
+    auta: autaValues,
+    auts: autsValues,
+    collezione: appCollection,
+    ogtd: ogtdNames,
+    piano: item.piano,
+    materia: mtcAPP,
+    prcd: prcdFinal,
+    prvc: prvcFinal,
+    tcl: tclFinal,
+    sala: item.sala,
+    parete: item.parete,
+    sgti: item.sgti,
+    specifiche: item.specifiche,
+  });
+}
+
+// SHOW THE IMAGE OF THE ITEM
 async function fecthImage() {
   url.value = import.meta.env.VITE_API_BASE_URL; //url of directus
   const imgresponse = await directus.items(collection.value).readByQuery({
@@ -193,8 +372,8 @@ async function fecthImage() {
 .succesAlert {
   width: 25%;
   text-align: center;
- 
- position: fixed;
+
+  position: fixed;
   right: 0;
 }
 </style>

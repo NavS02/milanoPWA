@@ -52,7 +52,7 @@ export default {
         quality: 10,
         column: 4,
       }),
-      new Files({ name: 'images', label: 'Altre imagini', foreign_key:'directus_files_id', value:[],
+      new Files({ name: 'images', label: 'Altre immagini', foreign_key:'directus_files_id', value:[],
       fit: 'contain', width: 100, height: 100, quality: 80,column: 4 }),
       new Files({ name: 'files', label: 'Files allegati', foreign_key:'directus_files_id', value:[],
       fit: 'contain', width: 100, height: 100, quality: 80,column:4 }),

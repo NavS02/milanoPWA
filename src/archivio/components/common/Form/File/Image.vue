@@ -21,7 +21,7 @@
             </div>
         </template>
         <template v-else>
-            <div class="d-flex gap-2 mt-2">
+            <div class="d-flex gap-2 mt-2" v-if="field.edit !== 'false'">
                 <UploadModal @filesSelected="onFilesSelected">
                     <template #button-text>Upload Image</template>
                 </UploadModal>

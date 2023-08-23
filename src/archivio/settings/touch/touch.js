@@ -106,23 +106,25 @@ export default {
         value: "",
       }),
       new FormField({
-        name: "coordX",
-        label: "coordX",
-        type: "text",
+        name: "lat",
+        label: "lat",
+        type: "number",
         value: "",
         column: 6,
 
 
       }),
       new FormField({
-        name: "coordY",
-        label: "coordY",
-        type: "text",
+        name: "lng",
+        label: "lng",
+        type: "number",
         value: "",
         column: 6,
+        
 
 
       }),
+     
     ];
   },
   tableFields() {

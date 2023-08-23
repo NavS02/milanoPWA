@@ -1,6 +1,7 @@
 <template>
   <main id="main" class="main">
     <header class="mb-2 d-flex">
+      <!-- CREATE NEW ITEM -->
       <router-link
         :to="createLink"
         custom
@@ -19,6 +20,7 @@
       </div>
     </header>
 
+<!-- PRINT THE TABLE WIT HALL THE DATA -->
     <Table class="w-100 my-2" :items="items" :fields="fields">
       <!-- dynamically assigna labels to each thead -->
       <!-- <template v-for="(field, index) in fields" :key="index" #[`head(${field.key})`] >
@@ -44,7 +46,7 @@
         </div>
       </template>
     </Table>
-
+<!-- PAGINATION -->
     <div class="d-flex gap-2">
       <b-pagination
         v-model="page"
@@ -171,7 +173,22 @@ async function onDeleteClicked(item) {
     let response = await directus.items("opera").readByQuery(query);
     await directus.items("opera").updateOne(response.data[0].id, { app: null });
     deleteItem(item);
-  } else {
+  } else if(collection.value == "touch"){
+  let query = {
+      limit: 1,
+      filter: {
+        touch: {
+          _eq: item.id,
+        },
+      },
+    };
+
+    let response = await directus.items("opera").readByQuery(query);
+    await directus.items("opera").updateOne(response.data[0].id, { touch: null });
+    deleteItem(item);
+
+
+  }else {
     const confirmed = await modal.confirm({
       title: "Confirm",
       body: "Are you sure you want to delete this item?",

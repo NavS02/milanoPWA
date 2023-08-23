@@ -1,7 +1,7 @@
 <template>
     <label :for="`field-${field.name}`" class="form-label" v-html="field.label"></label>
     <div class="input-group mb-3">
-        <input type="text" :id="`field-${field.name}`" class="form-control" placeholder="https://example.com" v-model="data">
+        <input type="text" :id="`field-${field.name}`" class="form-control" placeholder="https://example.com" v-model="data" :disabled="field.edit  === 'false'">
         <button class="btn btn-outline-secondary" type="button" @click="onLinkButtonClicked" :disabled="url===null">
             <font-awesome-icon icon="fa-link" fixed-width />
         </button>

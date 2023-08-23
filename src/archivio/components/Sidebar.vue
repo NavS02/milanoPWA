@@ -238,6 +238,11 @@ export default {
                   <i class="bi bi-printer"></i> Stampa prestito</router-link
                 >
               </li>
+               <li class="list-group-item">
+                <router-link class="nav-link" :to="{ name: 'printItem',params: { id: 0 } }">
+                  <i class="bi bi-printer"></i> Stampa opera</router-link
+                >
+              </li>
              <!-- prestito -->
              
             </ul>

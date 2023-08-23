@@ -6,6 +6,7 @@
     ></label>
     <input
       v-if="field.special == true"
+      :disabled="field.edit == 'false'"
       style="background-color: lightyellow"
       :type="field.type"
       :id="`field-${field.name}`"

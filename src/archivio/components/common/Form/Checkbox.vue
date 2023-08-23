@@ -5,6 +5,7 @@
         <div :class="{['d-flex flex-row gap-2']: field.inline}">
             <template v-for="(option, index) in field.options" :key="index">
                 <div class="form-check">
+                    
                     <input class="form-check-input" type="checkbox" :id="`field-${option.value}`" :value="option.value" v-model="selected">
                     <label class="form-check-label" :for="`field-${option.value}`" v-html="option.label"></label>
                 </div>

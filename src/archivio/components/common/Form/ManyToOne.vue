@@ -14,7 +14,7 @@
                     <span>{{ item.id }}</span>
                 </template>
             </div>
-            <div class="d-flex ms-auto gap-2">
+            <div class="d-flex ms-auto gap-2" v-if="field.edit !== 'false'">
                 <button class="btn btn-sm btn-light ms-auto" @click="onSelectExistingClicked">
                     <font-awesome-icon :icon="['fa-solid', 'up-right-from-square']" fixed-width/>
                 </button>
@@ -27,7 +27,7 @@
         <slot :item="item"></slot>
     </template>
     <template v-else>
-        <div class="buttons d-flex gap-2 border border-muted rounded p-2">
+        <div class="buttons d-flex gap-2 border border-muted rounded p-2" v-if="field.edit !== 'false'">
             <button class="btn btn-sm btn-primary" @click="onCreateNewClicked"  v-if="field.voc !== 'close'">
                 <font-awesome-icon icon="fa-solid fa-plus" fixed-width/>
                 <span class="ms-1">Creare</span>

@@ -221,7 +221,7 @@ export default {
   },
   tableFields() {
     return [
-      { key: "id", label: "ID \t", sortable: true },
+      { key: "invn", label: "Inventario \t", sortable: true },
       { key: "id_opera", label: "ID Opera", sortable: true },
       { key: "titolo", label: "Titolo", sortable: true },
       { key: "autore", label: "Autore", sortable: true },

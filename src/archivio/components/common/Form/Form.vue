@@ -80,14 +80,15 @@
             <MdEditor v-model="field.value" />
           </div>
         </template>
+       
         <template v-else-if="field.type == 'richtext'">
           <div id="alignp-1" :class="`col-md-${field.column}`">
             <div>
-               <label
-              :for="`field-${field.name}`"
-              class="form-label"
-              v-html="field.label"
-            ></label>
+              <label
+                :for="`field-${field.name}`"
+                class="form-label"
+                v-html="field.label"
+              ></label>
               <editor
                 v-model="field.value"
                 api-key="7vy8ie0rxcb6wxvm6pwpvw6pqh74qjoq3beib9fpf8gd9l75"
@@ -96,7 +97,7 @@
                   menubar: false,
                   branding: false,
                   plugins: [
-                    'advlist autolink lists link image imagetools charmap print preview anchor ',
+                    'advlist autolink lists link image charmap print preview anchor ',
                     'searchreplace visualblocks  fullscreen',
                     'insertdatetime media table paste  help wordcount ',
                   ],
@@ -105,6 +106,8 @@
            alignleft aligncenter alignright alignjustify table | \
            bullist numlist outdent indent | removeformat | help preview',
                 }"
+              :disabled="field.edit === 'false'"
+
               />
             </div>
           </div>
@@ -120,6 +123,7 @@
               v-html="field.label"
             ></label>
             <textarea
+            :disabled="field.edit === 'false'"
               v-if="field.special == true"
               :type="field.type"
               style="background-color: lightyellow"
@@ -139,6 +143,7 @@
             ></textarea>
           </div>
         </template>
+        
         <template v-else>
           <div id="alignp-1" :class="`col-md-${field.column}`">
             <StandardInput v-model="field.value" :field="field" />
