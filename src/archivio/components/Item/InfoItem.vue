@@ -1,4 +1,10 @@
 <template>
+
+
+
+<!-- MODULE DESACTIVATED -->
+
+
   <main id="main" class="main">
     <section class="section profile" id="element">
       <div class="row">

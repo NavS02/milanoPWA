@@ -76,7 +76,7 @@ router.push({
           </div>
           <div class="card-footer text-center">
             <button type="button" class="btn btn-warning m-1" @click="onEditOperaClicked(item.id_opera)">Edita opera</button>
-            <button type="button" class="btn btn-info" @click="onEditTouchClicked(item.id)">Edita touchscreen</button>
+            <button type="button" class="btn btn-primary" @click="onEditTouchClicked(item.id)">Edita touchscreen</button>
             
             
           </div>

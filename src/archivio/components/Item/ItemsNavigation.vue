@@ -1,4 +1,5 @@
 <template>
+<!-- NAVIGATION BUTTONS -->
     <div class="d-flex gap-2">
         <div>
             <button class="btn btn-sm btn-outline-primary" @click="onPrevClicked" :disabled="!prev">
@@ -12,8 +13,6 @@
                 <span class="ms-1">Next</span>
             </button>
         </div>
-        <!-- {{prev}} -->
-<!-- {{next}} -->
     </div>
 </template>
 

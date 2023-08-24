@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="credits">
-                            Progettato da <a href="https://www.ambientinarratividigitali.it/" target="_blank">And Srl</a>
+                            Progettato da <a href="https://www.ambientinarratividigitali.it/" target="_blank">AND srl</a>
                         </div>
 
                     </div>

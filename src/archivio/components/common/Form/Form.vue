@@ -140,6 +140,8 @@
               class="form-control"
               rows="5"
               v-model="field.value"
+            :disabled="field.edit === 'false'"
+
             ></textarea>
           </div>
         </template>

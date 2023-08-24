@@ -476,7 +476,7 @@
                 </div>
                 <div class="modal-body">
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <!-- First print type -->
                       <div class="card cardSelector">
                         <div class="card-body">
@@ -489,7 +489,20 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                     <div class="col-md-4">
+                <!-- Second print type -->
+                <div class="card cardSelector">
+                  <div class="card-body">
+                    <h5 class="card-title">Stampa scheda</h5>
+                    <img
+                      src="/sInfo.png"
+                      style="width: 100%"
+                      @click="printScheda(item)"
+                    />
+                  </div>
+                </div>
+              </div>
+                    <div class="col-md-4">
                       <!-- Second print type -->
                       <div class="card cardSelector">
                         <div class="card-body">
@@ -638,6 +651,12 @@ export default {
         params: { id: currentItem.value },
       });
     }
+    function printScheda() {
+  router.push({
+    name: "printItem",
+    params: { id: parseInt(currentItem.value) },
+  });
+}
     return {
       authenticated,
       user,
@@ -658,6 +677,7 @@ export default {
       closeAlert,
       printS,
       printP,
+      printScheda,
       toggleClass,
       isToggled: false,
     };

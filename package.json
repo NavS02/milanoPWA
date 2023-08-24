@@ -1,7 +1,10 @@
 {
   "name": "relational-db-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "NavS02",
+  "url":"https://github.com/NavS02",
+  "company":"https://www.ambientinarratividigitali.it/",
   "type": "module",
   "main": "src/main.js",
   "scripts": {
@@ -35,7 +38,6 @@
     "vue": "^3.3.0",
     "vue-accordion": "^1.0.0",
     "vue-router": "^4.1.6"
-
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

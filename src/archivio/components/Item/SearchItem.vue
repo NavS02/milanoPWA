@@ -1204,7 +1204,7 @@ function printP() {
 function printScheda() {
   router.push({
     name: "printItem",
-    params: { id: currentItem.value.id, },
+    params: { id: parseInt(currentItem.value.id) },
   });
 }
 

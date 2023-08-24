@@ -86,7 +86,7 @@
               <a
                 href="https://www.ambientinarratividigitali.it/"
                 target="_blank"
-                >And Srl</a
+                >AND srl</a
               >
             </div>
           </div>

@@ -22,11 +22,7 @@
 
 <!-- PRINT THE TABLE WIT HALL THE DATA -->
     <Table class="w-100 my-2" :items="items" :fields="fields">
-      <!-- dynamically assigna labels to each thead -->
-      <!-- <template v-for="(field, index) in fields" :key="index" #[`head(${field.key})`] >
-            {{ field.label ? field.label : field.key }}
-        </template> -->
-
+      <!-- dynamically assign labels to each thead -->
       <template #cell(actions)="{ item, field, value }">
         <div class="actions">
           <button

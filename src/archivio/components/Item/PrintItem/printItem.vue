@@ -1,9 +1,10 @@
 <template>
   &nbsp
   <main id="main" class="main">
+    <!-- SEARCH ID FORM -->
     <div class="text-center">
       <input
-        type="text"
+        type="number"
         class="form-control text-center"
         id="idItem"
         required=""
@@ -14,14 +15,16 @@
         Cerca
       </button>
     </div>
+    <!-- PRINT THIS CONTENT -->
     <section class="section profile" id="element">
+      <!-- CARD WITH ALL THE DATA -->
       <div class="card mt-5" v-if="id != 0">
         <div class="card-header text-center">
-          <img src="/logoMilano.png" alt="" srcset="" />
+          <img src="/logoMilano.png" alt="" srcset="" style="width: 300px" />
           <br />
           <br />
           <h2 v-if="id != 0">Scheda n.{{ id }}</h2>
-          <img :src="url" alt="" srcset="" class="center" style="width: 20%" />
+          <img :src="url" alt="" srcset="" class="center" style="width: 15%" />
         </div>
         <div class="card-body">
           <Form :fields="fields"> </Form>
@@ -29,13 +32,14 @@
       </div>
     </section>
 
+    <!-- PRINT BUTTON -->
     <div class="center">
       <button
         type="button"
         class="btn btn-primary btn-lg btn-block"
         style="width: 100%"
         @click="printItem()"
-        v-if="id !=0"
+        v-if="id != 0"
       >
         Print
       </button>
@@ -89,25 +93,25 @@ watch(
 );
 
 async function fetchItem(idOpera) {
+  // set non editable fields
   try {
     for (let index = 0; index < fields.value.length; index++) {
       fields.value[index].edit = "false";
     }
-
+    // takes data of each field
     const response = await directus.items("opera").readByQuery({
       limit: 1,
       filter: { id: { _eq: currentId.value } },
     });
     item.value = response.data[0];
-    try {
-      url.value =
-        import.meta.env.VITE_API_BASE_URL + "/assets/" + item.value.icona;
-    } catch (error) {
-      url.value = null;
-    }
+    fetchImage(item.value);
   } catch (error) {
     item.value = null;
   }
+}
+function fetchImage(itemSelected) {
+  url.value =
+    import.meta.env.VITE_API_BASE_URL + "/assets/" + itemSelected.icona;
 }
 function changeItem() {
   currentId.value = document.getElementById("idItem").value;

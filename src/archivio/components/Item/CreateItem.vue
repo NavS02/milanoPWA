@@ -1,6 +1,6 @@
 <template>
   <main id="main" class="main">
-    <!-- EMPTY FORM WITH ALL THE FIELDS -->
+    <!-- EMPTY FORM WITH ALL FIELDS -->
     <Form :fields="fields">
       <template v-slot:footer="{ data }">
         <div class="buttons">
