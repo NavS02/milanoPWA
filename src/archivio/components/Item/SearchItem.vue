@@ -447,7 +447,7 @@
             </div>
           </div>
         </div>
-
+        <!-- PAGINATION -->
         <nav aria-label="...">
           <ul
             class="pagination"
@@ -504,6 +504,7 @@
         </nav>
       </div>
     </div>
+    <!-- PRINT OPTIONS -->
     <div
       class="modal fade show"
       id="ExtralargeModal"
@@ -566,12 +567,12 @@
                   </div>
                 </div>
               </div>
-               
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- LOADER ANIMATION -->
     <Loaded v-if="!loaded" />
     <h1 class="text-center" v-if="noResult">Nessun risultato</h1>
   </main>
@@ -588,7 +589,6 @@ import * as settings from "../../settings/";
 import Table from "../common/Table/Table.vue";
 import Loaded from "../common/Loader.vue";
 import { onMounted } from "vue";
-import { createPopper } from "@popperjs/core";
 
 const route = useRoute();
 const router = useRouter();
@@ -1379,7 +1379,6 @@ async function createTouch(itemSelected) {
     limit: -1,
   });
   let item = Myitem.data[0];
-  console.log(item);
   let iconTouch = document.getElementById("touchButton-" + item.id);
   if (iconTouch.classList.contains("bi-map")) {
     iconTouch.className = "bi bi-map-fill";
@@ -1395,6 +1394,7 @@ async function createTouch(itemSelected) {
       .updateOne(item.id, { touch: response2.id });
   }
 }
+
 </script>
 
 <style scoped>

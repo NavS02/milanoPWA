@@ -12,7 +12,12 @@
             <div
               class="card-body profile-card pt-4 d-flex flex-column align-items-center"
             >
-              <img :src="imageurl" alt="Profile" class="rounded-circle" />
+              <img
+                :src="imageurl"
+                alt="Profile"
+                class="rounded-circle"
+                style="width: 50%"
+              />
               <h2>{{ me?.first_name }} {{ me?.last_name }}</h2>
               <h3>{{ me?.email }}</h3>
               <button
@@ -147,20 +152,7 @@
                 >
                   <!-- Profile Edit Form -->
                   <form action="">
-                    <!-- <div class="row mb-3">
-                      <label
-                        for="profileImage"
-                        class="col-md-4 col-lg-3 col-form-label"
-                        >Profile Image</label
-                      >
-                      <div class="col-md-8 col-lg-9">
-                        <div class="d-flex align-items-center">
-                          <div class="flex-grow-1">
-                            <Upload />
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
+               
 
                     <div class="row mb-3">
                       <label for="Name" class="col-md-4 col-lg-3 col-form-label"
@@ -255,6 +247,21 @@
                           class="form-control"
                           id="Email"
                           :value="me?.email"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="file" class="col-md-4 col-lg-3 col-form-label"
+                        >Avatar</label
+                      >
+                      <div class="col-md-8 col-lg-9">
+                        <input
+                          type="file"
+                          name="file"
+                          accept="image/*"
+                          id="fileInput"
+                          @change="updateImage"
+                          class="form-control"
                         />
                       </div>
                     </div>
@@ -361,6 +368,7 @@
                           type="password"
                           class="form-control"
                           id="current-password"
+                          autocomplete="on"
                         />
                       </div>
                     </div>
@@ -377,6 +385,7 @@
                           type="password"
                           class="form-control"
                           id="new-password"
+                          autocomplete="on"
                         />
                       </div>
                     </div>
@@ -393,6 +402,7 @@
                           type="password"
                           class="form-control"
                           id="renewPassword"
+                          autocomplete="on"
                         />
                       </div>
                     </div>
@@ -489,19 +499,19 @@
                         </div>
                       </div>
                     </div>
-                     <div class="col-md-4">
-                <!-- Second print type -->
-                <div class="card cardSelector">
-                  <div class="card-body">
-                    <h5 class="card-title">Stampa scheda</h5>
-                    <img
-                      src="/sInfo.png"
-                      style="width: 100%"
-                      @click="printScheda(item)"
-                    />
-                  </div>
-                </div>
-              </div>
+                    <div class="col-md-4">
+                      <!-- Second print type -->
+                      <div class="card cardSelector">
+                        <div class="card-body">
+                          <h5 class="card-title">Stampa scheda</h5>
+                          <img
+                            src="/sInfo.png"
+                            style="width: 100%"
+                            @click="printScheda(item)"
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div class="col-md-4">
                       <!-- Second print type -->
                       <div class="card cardSelector">
@@ -539,6 +549,7 @@ import * as settings from "../settings/";
 import { directus } from "../API/";
 import Table from "../components/common/Table/Table.vue";
 import Upload from "../components/common/Upload/Upload.vue";
+import Image from "../components/common/Form/File/Image.vue";
 export default {
   components: { Table, Upload },
 
@@ -572,17 +583,16 @@ export default {
       },
       { immediate: true, deep: true }
     );
-
     async function fetchData() {
       me.value = await directus.users.me.read();
-  const myRol = await directus.items("directus_roles").readByQuery({
+      const myRol = await directus.items("directus_roles").readByQuery({
         filter: {
           id: {
             _eq: me.value.role,
           },
         },
       });
-      me.value.role=myRol.data[0].name
+      me.value.role = myRol.data[0].name;
       const response = await directus.items(collection.value).readByQuery({
         filter: {
           user_created: {
@@ -593,11 +603,21 @@ export default {
       const { data = [] } = response;
 
       items.value = data;
+      imageurl.value =
+        import.meta.env.VITE_API_BASE_URL + "/assets/" + me.value.avatar;
     }
-    function updateImage() {
-      let img = document.getElementById("profilePictureSelector").value;
-      imageurl.value = img;
+    async function updateImage() {
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
+
+      const formData = new FormData();
+      formData.append("file", file);
+      let list = await directus.files.createOne(formData);
+      await directus.users.me.update({
+        avatar: list.id,
+      });
     }
+
     function toggleClass() {
       this.isToggled = !this.isToggled;
       document.body.classList.toggle("toggle-sidebar", this.isToggled);
@@ -651,12 +671,14 @@ export default {
         params: { id: currentItem.value },
       });
     }
+
     function printScheda() {
-  router.push({
-    name: "printItem",
-    params: { id: parseInt(currentItem.value) },
-  });
-}
+      router.push({
+        name: "printItem",
+        params: { id: parseInt(currentItem.value) },
+      });
+    }
+
     return {
       authenticated,
       user,

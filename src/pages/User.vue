@@ -115,9 +115,7 @@
 
                     <div class="row align-items-center justify-content-between">
                       <div class="col-lg-3 col-md-3 label">Company</div>
-                      <div class="col-lg-9 col-md-9">
-                        Museo diocesano
-                      </div>
+                      <div class="col-lg-9 col-md-9">Museo diocesano</div>
                     </div>
 
                     <div class="row align-items-center justify-content-between">
@@ -415,9 +413,7 @@
                   id="profile-favorite-items"
                   role="tabpanel"
                 >
-                  <div class="table-responsive">
-                   
-                  </div>
+                  <div class="table-responsive"></div>
                 </div>
               </div>
             </div>
@@ -428,6 +424,7 @@
     <footer class="footer">
       <div class="d-flex justify-content-end" style="bottom">
         <span class="align-self-end">User ID: {{ user.id }}</span>
+        {{user}}
       </div>
     </footer>
   </main>
@@ -451,14 +448,9 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const userRol = ref();
-    let imageurl = ref("/not-found.svg");
+    let imageurl = ref(( import.meta.env.VITE_API_BASE_URL)+"/assets/");
     let items = ref();
-   
-    
-    function updateImage() {
-      let img = document.getElementById("profilePictureSelector").value;
-      imageurl.value = img;
-    }
+
     function toggleClass() {
       this.isToggled = !this.isToggled;
       document.body.classList.toggle("toggle-sidebar", this.isToggled);
@@ -484,7 +476,6 @@ export default {
         email: email,
       });
     }
- 
 
     return {
       authenticated,

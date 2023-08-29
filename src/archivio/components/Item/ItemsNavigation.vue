@@ -1,4 +1,5 @@
 <template>
+
 <!-- NAVIGATION BUTTONS -->
     <div class="d-flex gap-2">
         <div>
@@ -47,6 +48,7 @@ function onPrevClicked() {
     if(_prev) {
         route.params.id = _prev
         router.push(route)
+        
     }
 }
 function onNextClicked() {

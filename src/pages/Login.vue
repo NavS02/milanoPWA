@@ -12,7 +12,7 @@
               <a class="logo d-flex align-items-center w-auto">
                 <!---  <img src="assets/img/logo.png" alt="">---->
 
-                  <i class="bi bi-house text-primary"></i>
+                <i class="bi bi-house text-primary"></i>
                 <router-link class="nav-link" :to="{ name: 'home' }">
                   Museo diocesano</router-link
                 >
@@ -20,7 +20,7 @@
             </div>
             <!-- End Logo -->
 
-            <div class="card mb-3" style="width: 300%;height:100%">
+            <div class="card mb-3" style="width: 300%; height: 100%">
               <div class="card-body">
                 <div class="row g-3 needs-validation">
                   <div class="col-12"></div>
@@ -56,8 +56,9 @@
                       v-model="password"
                       required
                     />
-                    <div class="invalid-feedback">
-                      Please enter your password!
+                    <br>
+                    <div style="color: red; text-align: center" v-if="showError">
+                      Dati non corretti
                     </div>
                   </div>
                   <div class="col-12"></div>
@@ -86,7 +87,7 @@
               <a
                 href="https://www.ambientinarratividigitali.it/"
                 target="_blank"
-                >AND srl</a
+                >And Srl</a
               >
             </div>
           </div>
@@ -97,19 +98,20 @@
 </template>
 
 <script>
-import { ref, watch} from "vue";
-import store from '../store'
+import { ref, watch } from "vue";
+import store from "../store";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
   setup(props, context) {
     const router = useRouter();
     const route = useRoute();
-const userStore = store.user
+    const userStore = store.user;
 
     const program = ref();
     const email = ref("");
     const password = ref("");
+    const showError =ref(false)
     watch(
       route,
       () => {
@@ -119,12 +121,12 @@ const userStore = store.user
       { immediate: true, deep: true }
     );
 
-
     async function login() {
-    const logged = await userStore.login(email.value, password.value)
+      showError.value=false
+      const logged = await userStore.login(email.value, password.value);
 
       if (!logged) {
-        alert("invalid credentials");
+        showError.value=true;
         return;
       }
       const { redirect } = route.query;
@@ -142,6 +144,7 @@ const userStore = store.user
 
     return {
       email,
+      showError,
       password,
       login,
     };

@@ -10,6 +10,8 @@
         required=""
         placeholder="Enter an ID"
         :value="currentId"
+        min="1" 
+        
       />
       <button type="button" class="btn btn-primary mt-1" @click="changeItem()">
         Cerca
@@ -65,7 +67,7 @@ const { id } = toRefs(props);
 const item = ref();
 const collection = ref("opera");
 const fields = ref([]); // fields settings
-const url = ref();
+const url = ref("/not-found.svg");
 watch(
   route,
   async () => {
@@ -86,7 +88,7 @@ watch(
       }
       fields.value = collectionFields;
 
-      fetchItem(id);
+      fetchItem(id.value);
     }, 0);
   },
   { immediate: true, deep: true }
@@ -94,15 +96,18 @@ watch(
 
 async function fetchItem(idOpera) {
   // set non editable fields
+
   try {
     for (let index = 0; index < fields.value.length; index++) {
       fields.value[index].edit = "false";
     }
+
     // takes data of each field
     const response = await directus.items("opera").readByQuery({
       limit: 1,
-      filter: { id: { _eq: currentId.value } },
+      filter: { id: { _eq: idOpera } },
     });
+
     item.value = response.data[0];
     fetchImage(item.value);
   } catch (error) {
@@ -120,7 +125,7 @@ function changeItem() {
 function printItem() {
   var opt = {
     margin: 0.2,
-    filename: "scheda_" + currentId.value + "_" + new Date() + ".pdf",
+    filename: "scheda_" + id.value + "_" + new Date() + ".pdf",
     image: { type: "png", quality: 0.5 },
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" },

@@ -50,7 +50,7 @@
         :totalItems="totalItems"
         size="sm"
       />
-      <b-pagination-dropdown v-model="limit" :options="[5, 10, 25, 50, 100]" />
+      <b-pagination-dropdown v-model="limit" :options="[5, 10, 25, 50, 100]" @click="fetchData()"/>
     </div>
   </main>
 </template>

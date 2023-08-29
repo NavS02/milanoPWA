@@ -1,4 +1,5 @@
 <template>
+<!-- DASHBOARD -->
   <main id="main">
     <div class="row d-flex">
       <div class="col-4">
@@ -66,6 +67,7 @@
         </div>
       </div>
     </div>
+    <!-- NAVIGATION MAPS -->
     <div style="position: relative">
       <img
         :src="image"
@@ -96,6 +98,7 @@
         class="img-fluid pianoI"
       />
     </div>
+    <!-- INTERACTIVE COORDS -->
     <map id="map1689762472709" name="map1689762472709" style="cursor: pointer"
       ><area
         shape="rect"

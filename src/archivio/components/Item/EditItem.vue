@@ -74,6 +74,7 @@ const showAlert = ref(false);
 watch(
   route,
   async () => {
+    fields.value=null
     if (!collection.value) return;
     // retrieve the settings
     const itemSettings = settings[collection.value];

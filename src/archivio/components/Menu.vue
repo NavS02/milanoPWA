@@ -46,15 +46,16 @@ export default {
     id="header"
     class="header fixed-top d-flex align-items-center justify-content-between"
   >
+  <!-- ICON OF THE MUSEUM -->
     <div class="d-flex align-items-center">
       <img src="/logoMilano.png" alt="" style="height: 50px" />
       <i class="bi bi-list toggle-sidebar-btn" @click="toggleClass"></i>
     </div>
-
+<!-- TITLE -->
     <div class="operaTitle text-center">
       <span>Archivio Opere d'arte </span>
     </div>
-
+<!-- USER DROPDOWN -->
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <ul class="nav">

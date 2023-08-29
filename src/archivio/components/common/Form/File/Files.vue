@@ -25,7 +25,7 @@
         </template>
         <div class="d-flex gap-2 mt-2" v-if="field.edit !== 'false'">
             <UploadModal @filesSelected="onFilesSelected">
-                <template #button-text>Upload files{{field.edit}}</template>
+                <template #button-text>Upload files</template>
             </UploadModal>
             <AssetsModal @filesSelected="onFilesSelected" :files="items" multiple>
                 <template #button-text>Select existing</template>

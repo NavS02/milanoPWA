@@ -18,6 +18,7 @@ const url = ref(import.meta.env.VITE_API_BASE_URL);
 
 fetchData();
 
+
 async function fetchData() {
   // IF ITS PUBLIC,SHOW IT
   const response = await directus.items("touch").readByQuery({
@@ -57,7 +58,7 @@ router.push({
       access-token="pk.eyJ1IjoibmF2czAyIiwiYSI6ImNsa2kxM2lybDA2Yncza21qb2YxeW5ndnIifQ.8ld3MBwHYeIBZjobdOE_5A"
       :mapboxMap="{
         mapStyle: 'mapbox://styles/mapbox/streets-v11',
-        style: 'height: 800px;width:100%',
+        style: 'height: 800px;width:100%;',
         center: [9.19, 45.4642],
         zoom: 10,
       }"

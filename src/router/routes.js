@@ -46,7 +46,7 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: "/archivio/touchscreen/map",
+        path: "/archivio/touch/map",
         name: "ItemsMap",
         component: ItemsMap,
         meta: { requiresAuth: true },
