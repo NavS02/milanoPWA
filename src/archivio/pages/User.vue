@@ -23,7 +23,7 @@
               <button
                 type="button"
                 class="btn btn-danger"
-                @click.prevent="confirmLogout"
+                @click="confirmLogout"
               >
                 Esci
               </button>
@@ -152,8 +152,6 @@
                 >
                   <!-- Profile Edit Form -->
                   <form action="">
-               
-
                     <div class="row mb-3">
                       <label for="Name" class="col-md-4 col-lg-3 col-form-label"
                         >Nome</label
@@ -541,7 +539,7 @@
   </main>
 </template>
 <script>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch,inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import store from "../../store";
@@ -567,6 +565,7 @@ export default {
     const me = ref();
     const showAlert = ref(false);
     let currentItem = ref();
+    const modal = inject("$modalManager");
 
     // watch the route and update data based on the collection param
     watch(
@@ -623,8 +622,11 @@ export default {
       document.body.classList.toggle("toggle-sidebar", this.isToggled);
     }
 
-    function confirmLogout() {
-      const confirmed = confirm("È sicuro di voler effettuare il logout?");
+    async function confirmLogout() {
+      const confirmed = await modal.confirm({
+        title: "Confirma",
+        body: "Sei sicuro di voler lasciare questa pagina?",
+      });
       if (confirmed) router.push({ name: "logout" });
     }
     async function onSaveClicked(item) {

@@ -44,7 +44,6 @@
     <Loader v-if="!loaded" style="text-align: center; margin-top: 50%" />
   </main>
 </template>
-
 <script setup>
 import { ref, watch, toRefs, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -74,7 +73,7 @@ const showAlert = ref(false);
 watch(
   route,
   async () => {
-    fields.value=null
+    fields.value = null;
     if (!collection.value) return;
     // retrieve the settings
     const itemSettings = settings[collection.value];
@@ -93,7 +92,6 @@ watch(
       }
       fields.value = collectionFields;
       loaded.value = true;
-
       fecthImage();
     }, 0);
   },
@@ -116,7 +114,7 @@ function goToList() {
 }
 
 async function onEditOpera(id) {
-// IF THE ITEM IS ( APP || TOUCHSCREEN ) DELETE THE RELATION IN THE OPERA
+  // IF THE ITEM IS ( APP || TOUCHSCREEN ) DELETE THE RELATION IN THE OPERA
   if (collection.value == "app") {
     var query = {
       limit: 1,
@@ -127,14 +125,14 @@ async function onEditOpera(id) {
       },
     };
   } else if (collection.value == "touch") {
-     var query = {
-    limit: 1,
-    filter: {
-      touch: {
-        _eq: id,
+    var query = {
+      limit: 1,
+      filter: {
+        touch: {
+          _eq: id,
+        },
       },
-    },
-  };
+    };
   }
   let response = await directus.items("opera").readByQuery(query);
   router
@@ -151,6 +149,16 @@ async function save(data) {
     const response = await directus
       .items(collection.value)
       .updateOne(id.value, data);
+
+    for (const field of fields.value) {
+      if (field.type == "map") {
+        let data = { ["mappa"]: field.value };
+
+        const response = await directus
+          .items(collection.value)
+          .updateOne(id.value, data);
+      }
+    }
     if (collection.value == "opera") {
       updateAPP();
     }

@@ -80,7 +80,11 @@
             <MdEditor v-model="field.value" />
           </div>
         </template>
-       
+       <template v-else-if="field.type == 'map'">
+          <div id="alignp-1" :class="`col-md-${field.column}`">
+            <Map v-model="field.value" :field="field" />
+          </div>
+        </template>
         <template v-else-if="field.type == 'richtext'">
           <div id="alignp-1" :class="`col-md-${field.column}`">
             <div>
@@ -178,6 +182,7 @@ import {
   Divider,
   StandardInput,
   ExternalLinkInput,
+  Map
 } from ".";
 import Editor from "@tinymce/tinymce-vue";
 import { MdEditor } from "md-editor-v3";

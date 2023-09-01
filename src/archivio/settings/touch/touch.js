@@ -105,19 +105,11 @@ export default {
         type: "text",
         value: "",
       }),
-      new FormField({
-        name: "lat",
-        label: "lat",
-        type: "number",
-        value: "",
-        column: 6,
 
-
-      }),
       new FormField({
-        name: "lng",
-        label: "lng",
-        type: "number",
+        name: "mappa",
+        label: "Map",
+        type: "map",
         value: "",
         column: 6,
         

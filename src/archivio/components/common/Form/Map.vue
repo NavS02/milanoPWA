@@ -1,0 +1,97 @@
+<template>
+{{field.label}}:
+<br>
+<br>
+  <div id="map-container">
+    <div id="map"></div>
+    <pre id="coordinates" class="coordinates"></pre>
+    
+  </div>
+  
+</template>
+
+<script setup>
+import { onMounted } from "vue";
+import mapboxgl from "mapbox-gl";
+import { toRefs, computed } from "vue";
+const props = defineProps({
+  modelValue: {},
+  field: {},
+});
+const emit = defineEmits(["update:modelValue"]);
+
+const { modelValue, field } = toRefs(props);
+
+const data = computed({
+  get() {
+    return modelValue.value;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
+onMounted(() => {
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoibmF2czAyIiwiYSI6ImNsa2kxM2lybDA2Yncza21qb2YxeW5ndnIifQ.8ld3MBwHYeIBZjobdOE_5A";
+  const coordinates = document.getElementById("coordinates");
+  const mapContainer = document.getElementById("map-container");
+  const map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v12",
+    center: data.value.coordinates,
+    zoom: 8,
+  });
+
+  const marker = new mapboxgl.Marker({
+    draggable: true,
+  })
+    .setLngLat(data.value.coordinates)
+    .addTo(map);
+
+  function onDragEnd() {
+    const lngLat = marker.getLngLat();
+    coordinates.style.display = "block";
+    coordinates.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
+  data.value.coordinates=[lngLat.lng,lngLat.lat]
+field.value=data.value
+  }
+
+  marker.on("dragend", onDragEnd);
+
+  // Ajustar la altura del mapa al contenedor
+  map.on("resize", () => {
+    map.resize();
+  });
+});
+</script>
+
+<style scoped>
+.coordinates {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  padding: 5px 10px;
+  margin: 0;
+  font-size: 11px;
+  line-height: 18px;
+  border-radius: 3px;
+  display: none;
+}
+
+#map-container {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80vh; 
+  width: 800px; 
+}
+
+#map {
+  width: 100%; 
+  height: 100%; 
+}
+</style>

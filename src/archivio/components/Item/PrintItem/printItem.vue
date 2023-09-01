@@ -128,6 +128,9 @@ function printItem() {
     filename: "scheda_" + id.value + "_" + new Date() + ".pdf",
     image: { type: "png", quality: 0.5 },
     html2canvas: { scale: 2, useCORS: true },
+     pagebreak: {
+        mode: ['avoid-all', 'css', 'legacy']
+    },
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
   };
   html2pdf()

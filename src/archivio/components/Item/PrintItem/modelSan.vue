@@ -164,6 +164,9 @@ export default {
         margin: 0.2,
         filename: new Date() + ".pdf",
         image: { type: "png", quality: 0.5 },
+         pagebreak: {
+        mode: ['avoid-all', 'css', 'legacy']
+    },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
       };

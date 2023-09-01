@@ -27,10 +27,11 @@ async function fetchData() {
   });
   // FOR EACH PUBLIC ITEM TAKE THEIR COORDS
   response.data.forEach((element) => {
-    element.lat = parseFloat(element.lat);
-    element.lng = parseFloat(element.lng);
+     element.lat=element.mappa.coordinates[1] ;
+    element.lng=element.mappa.coordinates[0]  ;
     items.value.push(element);
   });
+
 }
 function onEditOperaClicked(idOpera){
 router.push({
