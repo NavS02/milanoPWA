@@ -16,7 +16,7 @@
                 :src="imageurl"
                 alt="Profile"
                 class="rounded-circle"
-                style="width: 50%"
+                style="width: 40%"
               />
               <h2>{{ me?.first_name }} {{ me?.last_name }}</h2>
               <h3>{{ me?.email }}</h3>

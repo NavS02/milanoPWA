@@ -11,12 +11,7 @@
             <br />
             <br />
             <h2 v-if="id != 0">Scheda n.{{ id[index] }}</h2>
-            <!-- <img
-              :src="url + favOpere[index].icona"
-              alt=""
-              style="width: 15%"
-              srcset=""
-            /> -->
+            <!-- <img :src="url" alt="" srcset="" style="width:20%" :id="'image-'+index"> -->
           </div>
           <div class="card-body">
             <Form :fields="fieldsFav" :id="'form-' + index"> </Form>
@@ -64,7 +59,7 @@ const fields = ref([]); // fields settings
 const url = ref("/not-found.svg");
 const favOpere = ref();
 const favoriteFields = ref([]);
-const myArray=ref([])
+const myArray = ref([]);
 watch(
   route,
   async () => {
@@ -83,7 +78,7 @@ async function fetchItems(idOpera) {
   const itemSettings = settings[collection.value];
   // define the subset of fields you need to view in the table
   const collectionFields = itemSettings.fields();
-    // set non editable fields
+  // set non editable fields
   const me = await directus.users.me.read();
   const myPref = await directus.items("pref").readByQuery({
     filter: {
@@ -95,29 +90,25 @@ async function fetchItems(idOpera) {
 
   id.value = myPref.data.map((item) => item.id_opera);
 
-   
-
-for (let index = 0; index < id.value.length; index++) {
-   const data = await store.collections.fetchOne(
-        collection.value,
-        id.value[index],
-        true
-      );
-         for (const field of collectionFields) {
+  for (let index = 0; index < id.value.length; index++) {
+    const data = await store.collections.fetchOne(
+      collection.value,
+      id.value[index],
+      true
+    );
+    for (const field of collectionFields) {
       await field.setInitialValue(data?.[field.name]);
-      field.edit="false"
+      field.edit = "false";
     }
-    myArray.value.push(collectionFields)
-
-
+    myArray.value.push(collectionFields);
+    // fetchImage(data,index)
+  }
 }
-
-
+function fetchImage(item, position) {
+  url.value = import.meta.env.VITE_API_BASE_URL + "/assets/" + item.icona.id;
+  console.log(url.value);
+  document.getElementById("image-" + position).src = url.value;
 }
-function fetchImage(items) {
-  url.value = import.meta.env.VITE_API_BASE_URL + "/assets/";
-}
-
 function printItem() {
   loaded.value = false;
   var opt = {
@@ -130,7 +121,6 @@ function printItem() {
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
   };
-
   html2pdf()
     .set(opt)
     .from(element)

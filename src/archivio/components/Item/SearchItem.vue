@@ -172,17 +172,17 @@
       </div>
       <div class="row">
         <div class="form-check form-switch col-md-4" style="margin-top: 50px">
-          <span class="resti">Opera restituita</span>
+          <label for="form-resti" class="resti"> Opera restituita </label>
           <input
             class="form-check-input"
             type="checkbox"
             v-model="form.resti"
-            :id="`form-resti`"
+            id="form-resti"
           />
         </div>
         <div class="col-md-4">
           <div class="form-check form-switch" style="margin-top: 50px">
-            <span class="resti"> Opera in deposito </span>
+            <label for="form-deposito" class="resti"> Opera in deposito </label>
             <input
               class="form-check-input"
               type="checkbox"
@@ -193,7 +193,7 @@
         </div>
         <div class="col-md-4">
           <div class="form-check form-switch" style="margin-top: 50px">
-            <span class="resti"> Opera esposta</span>
+            <label for="form-esposta" class="resti">Opera esposta</label>
             <input
               class="form-check-input"
               type="checkbox"
@@ -237,7 +237,13 @@
       </div>
       &nbsp
       {{ totalResult }} schede trovate
-      <i class="bi bi-info-circle" @click="showInfo = !showInfo"></i>
+      <i
+        :class="{
+          'bi bi-info-circle-fill': showInfo,
+          'bi bi-info-circle': !showInfo,
+        }"
+        @click="showInfo = !showInfo"
+      ></i>
       &nbsp
       <div v-if="showInfo">
         <hr />
@@ -1394,7 +1400,6 @@ async function createTouch(itemSelected) {
       .updateOne(item.id, { touch: response2.id });
   }
 }
-
 </script>
 
 <style scoped>
@@ -1416,60 +1421,8 @@ h5 {
   color: #012970;
   font-family: "Poppins", sans-serif;
 }
-.resti2 {
-  font-size: 14px;
-  font-weight: 500;
-  color: #012970;
-  font-family: "Poppins", sans-serif;
-}
+
 .acqn:checked {
   background-color: red;
-}
-#tooltip {
-  background: #333;
-  color: white;
-  font-weight: bold;
-  padding: 4px 8px;
-  font-size: 13px;
-  border-radius: 4px;
-  display: none;
-}
-
-#tooltip[data-show] {
-  display: block;
-}
-
-#arrow,
-#arrow::before {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: inherit;
-}
-
-#arrow {
-  visibility: hidden;
-}
-
-#arrow::before {
-  visibility: visible;
-  content: "";
-  transform: rotate(45deg);
-}
-
-#tooltip[data-popper-placement^="top"] > #arrow {
-  bottom: -4px;
-}
-
-#tooltip[data-popper-placement^="bottom"] > #arrow {
-  top: -4px;
-}
-
-#tooltip[data-popper-placement^="left"] > #arrow {
-  right: -4px;
-}
-
-#tooltip[data-popper-placement^="right"] > #arrow {
-  left: -4px;
 }
 </style>

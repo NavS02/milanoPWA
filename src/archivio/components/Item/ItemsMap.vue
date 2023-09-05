@@ -7,7 +7,7 @@ import { useRoute, useRouter } from "vue-router";
 // MAPBOX COMPONENTS
 import { StoreLocator } from "@studiometa/vue-mapbox-gl";
 import "@studiometa/vue-mapbox-gl/index.css";
-// IMPORT CSS 
+// IMPORT CSS
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css";
 const route = useRoute();
@@ -18,7 +18,6 @@ const url = ref(import.meta.env.VITE_API_BASE_URL);
 
 fetchData();
 
-
 async function fetchData() {
   // IF ITS PUBLIC,SHOW IT
   const response = await directus.items("touch").readByQuery({
@@ -27,28 +26,24 @@ async function fetchData() {
   });
   // FOR EACH PUBLIC ITEM TAKE THEIR COORDS
   response.data.forEach((element) => {
-     element.lat=element.mappa.coordinates[1] ;
-    element.lng=element.mappa.coordinates[0]  ;
+    element.lng = element.mappa.coordinates[0];
+    element.lat = element.mappa.coordinates[1];
     items.value.push(element);
   });
-
 }
-function onEditOperaClicked(idOpera){
-router.push({
+function onEditOperaClicked(idOpera) {
+  router.push({
     name: "editItemArc",
-    params: { id: idOpera, collection: 'opera' },
+    params: { id: idOpera, collection: "opera" },
   });
 }
-function onEditTouchClicked(idTouch){
-router.push({
+function onEditTouchClicked(idTouch) {
+  router.push({
     name: "editItemArc",
-    params: { id: idTouch, collection: 'touch' },
+    params: { id: idTouch, collection: "touch" },
   });
 }
-
-
 </script>
-
 <template>
   <main class="main" id="main">
     <!-- ITEMS => ITEMS THAT THE USER WILL SEE
@@ -63,9 +58,8 @@ router.push({
         center: [9.19, 45.4642],
         zoom: 10,
       }"
-      
     >
-    <!-- PANEL WHERE IS THE INFO OF THE ITEM -->
+      <!-- PANEL WHERE IS ITEMS'S INFO -->
       <template #panel="{ close, item }">
         <div class="card">
           <div class="card-header">
@@ -73,23 +67,37 @@ router.push({
             <h4>{{ item.indirizzo }}</h4>
           </div>
           <div class="card-body" id="cardContent">
-      <img :src="url+'/assets/' + item.icona" alt="" class="center" style="width: 15%" id="my-image" />
+            <img
+              :src="url + '/assets/' + item.icona"
+              alt=""
+              class="center"
+              style="width: 15%"
+              id="my-image"
+            />
             <div v-html="item.descrizione"></div>
           </div>
           <div class="card-footer text-center">
-            <button type="button" class="btn btn-warning m-1" @click="onEditOperaClicked(item.id_opera)">Edita opera</button>
-            <button type="button" class="btn btn-primary" @click="onEditTouchClicked(item.id)">Edita touchscreen</button>
-            
-            
+            <button
+              type="button"
+              class="btn btn-warning m-1"
+              @click="onEditOperaClicked(item.id_opera)"
+            >
+              Edita opera
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="onEditTouchClicked(item.id)"
+            >
+              Edita touchscreen
+            </button>
           </div>
-
         </div>
 
         <button @click="close" class="btn btn-outline-danger">Chiude</button>
       </template>
       <!-- AFTER THE LIST OF ITEMS  -->
       <template #after-list="{ filteredItems }">
-
         <p v-if="filteredItems.length <= 0">Nessun risultato.</p>
       </template>
     </StoreLocator>

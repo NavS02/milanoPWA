@@ -108,7 +108,7 @@ export default {
 
       new FormField({
         name: "mappa",
-        label: "Map",
+        label: "Mappa",
         type: "map",
         value: "",
         column: 6,

@@ -13,6 +13,7 @@
 <script setup>
 import { onMounted } from "vue";
 import mapboxgl from "mapbox-gl";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"; // Add this import
 import { toRefs, computed } from "vue";
 const props = defineProps({
   modelValue: {},
@@ -41,7 +42,12 @@ onMounted(() => {
     center: data.value.coordinates,
     zoom: 8,
   });
-
+map.addControl(
+new MapboxGeocoder({
+accessToken: mapboxgl.accessToken,
+mapboxgl: mapboxgl
+})
+);
   const marker = new mapboxgl.Marker({
     draggable: true,
   })
@@ -58,7 +64,6 @@ field.value=data.value
 
   marker.on("dragend", onDragEnd);
 
-  // Ajustar la altura del mapa al contenedor
   map.on("resize", () => {
     map.resize();
   });
