@@ -160,7 +160,7 @@
                 <div class="card cardSelector">
                   <div class="card-body">
                     <h5 class="card-title">Stampa sanitaria</h5>
-                    <img src="/sSanitaria.png" style="width: 100%" @click="printS(item)" />
+                    <img src="" style="width: 100%" @click="printS(item)" />
                   </div>
                 </div>
               </div>
@@ -169,7 +169,7 @@
                 <div class="card cardSelector">
                   <div class="card-body">
                     <h5 class="card-title">Stampa prestito</h5>
-                    <img src="/sPrestito.png" style="width: 100%" @click="printP(item)" />
+                    <img src="" style="width: 100%" @click="printP(item)" />
                   </div>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default {
     let currentItem = ref();
     let selectedOption = ref("list");
     const url = ref();
-    let imageurl = ref("/logoMilanosmall.jpg");
+    let imageurl = ref("/logoMilanoSmall.png");
     const me = ref();
     const showAlert = ref(false);
     const counter = ref(0);

@@ -1,123 +1,198 @@
 <template>
-  <div class="container">
-    <div class="card">
-      <img src="/logoMilano.png" alt="Logo" class="logo" />
-
-      <div class="options">
-        <div class="card" @click="onOptionClicked('archivio')">
-          <div class="card-icon">
-            <font-awesome-icon :icon="['fa-solid', 'fa-paintbrush']" />
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Archivio opere d'arte</h5>
-          </div>
+  <div class="hello">
+    <div style="text-align: center; margin-top: 10%">
+      <img src="/logoMilanoSmall.png" alt="" style="width: 60%" />
+      <h3>MUSEO DIOCESANO CARLO MARIA MARTINI</h3>
+    </div>
+    <router-link class="nav-link" :to="{ name: 'TouchScreen' }">
+      <div class="card cardB2">
+        <div class="car-body text-center">
+          <br />
+          VISUALIZZA LA MAPPA
         </div>
       </div>
+    </router-link>
+    <router-link class="nav-link" :to="{ name: 'ListItems' }">
+      <div class="card cardB1">
+        <div class="car-body text-center">
+          <br />
+          VISUALIZZA LE OPERE
+        </div>
+      </div>
+    </router-link>
+
+    <div class="install-button" @click="showInstallTutorial()">
+      <font-awesome-icon icon="circle-info" />
     </div>
-    <div class="credits">
-      Progettato da
-      <a href="https://www.ambientinarratividigitali.it/" target="_blank"
-        >AND Srl</a
-      >
+
+    <ul class="navigation">
+      <li class="navigationItem"><a href="#">About</a></li>
+      <li class="navigationItem"><a href="#">Contact us</a></li>
+    </ul>
+  </div>
+
+  <div class="modal" v-if="isModalVisible" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Installazione</h5>
+          <button type="button" class="btn-close" @click="closeModal"></button>
+        </div>
+        <div class="modal-body">
+          <h1>Seleziona il dispositivo utilizzato:</h1>
+          <div class="row">
+            <div class="col-6">
+              <button
+                class="btn btn-primary btn-lg btn-block OS"
+                @click="selectOS('ios')"
+              >
+                <i class="bi bi-apple"></i> Apple
+              </button>
+            </div>
+            <div class="col-6">
+              <button
+                class="btn btn-primary btn-lg btn-block OS"
+                @click="selectOS('android')"
+              >
+                <i class="bi bi-android"></i> Android
+              </button>
+            </div>
+          </div>
+          <div class="installationguide" v-if="OS == 'ios'">
+            <h1>Apple</h1>
+            <ol type="1">
+              <li>Accedi su <strong>Safari</strong></li>
+              <li>Clicca sul pulsante di condivisione che trovi su Safari</li>
+              <li>Clicca su <strong>"Aggiungi alla schermata Home"</strong></li>
+              <li>
+                Verifica che il nome visualizzato vada bene. In caso contrario
+                modificalo e clicca su <strong>"Aggiungi"</strong>.
+              </li>
+            </ol>
+          </div>
+          <div class="installationguide" v-if="OS == 'android'">
+            <h1>Android</h1>
+            <ol type="1">
+              <li>
+                Cerca l'icona
+                <strong>"Aggiungi a schermata principale" </strong>
+              </li>
+              <li>Clicca su <strong>"Aggiungi"</strong></li>
+              <li>Personalizza il Nome (opzionale)</li>
+              <li>Accedi all'App</li>
+            </ol>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" @click="closeModal">
+            Chiude
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+<script setup>
+import { ref, onMounted } from "vue";
+import { useAddToHomescreen } from "@owliehq/vue-addtohomescreen";
+const isModalVisible = ref(false);
 
-export default {
-  setup(props, context) {
-    const router = useRouter();
-    const route = useRoute();
+const showInstallButton = ref(false);
+const OS = ref();
 
-    function onOptionClicked(option) {
-      router.push({ name: "login", params: { program: option } });
-    }
+function selectOS(selection) {
+  OS.value = selection;
+}
+function showInstallTutorial() {
+  isModalVisible.value = true;
+}
 
-    return {
-      onOptionClicked,
-    };
-  },
-};
+function closeModal() {
+  isModalVisible.value = false;
+  OS.value = null;
+}
 </script>
 
 <style scoped>
-.container {
-   max-width: 1024px;
-  margin: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh; /* opcional si quieres que el contenedor ocupe toda la altura de la pantalla */
+.OS {
+  font-size: 16px;
+  margin-bottom: 10px;
 }
-
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.logo {
-  width: 50%;
-  max-width: 400px;
+.modal {
   display: block;
-  margin: auto;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.options {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+.modal-dialog {
+  margin-top: 10%;
+}
+
+.install-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+h3 {
+  margin: 40px 0 0;
+}
+
+.navigation {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+.navigationItem {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #b10b1c;
+  text-decoration: none;
 }
 
 .card {
-  margin: 10px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 40px 10%;
+  width: 80%;
+  height: 100px;
+}
+.cardB1 {
+  background-image: url("/card1.PNG");
+  background-position: center;
+  background-size: cover;
+  color: white;
+}
+.cardB2 {
+  background-image: url("/museoFoto.jpg");
+  background-position: center;
+  background-size: cover;
+  color: white;
+}
+.navigation {
+  margin-top: 40px;
+}
+
+.install-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  margin: 20px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  border-radius: 10px;
-}
-
-.card:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  transform: scale(1.05);
-}
-
-.card-icon {
-  font-size: 48px;
-  color: #861B2A;
-  margin-bottom: 10px;
-}
-
-.card-title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.credits {
-  text-align: center;
-  font-size: 14px;
-  color: #999;
-}
-
-@media only screen and (max-width: 768px) {
-  .card {
-    width: 45%;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .card {
-    width: 90%;
-  }
+  border-radius: 5px;
 }
 </style>

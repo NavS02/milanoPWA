@@ -1472,7 +1472,7 @@ button::-moz-focus-inner {
   visibility: visible;
 }
 .tox .tox-dialog-dock-transition {
-  transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+  transition: visibility 0s linear 0.15s, opacity 0.15s ease;
 }
 .tox .tox-dialog-dock-transition.tox-dialog-dock-fadein {
   transition-delay: 0s;
@@ -1565,7 +1565,7 @@ body.tox-dialog__disable-scroll {
   border-bottom: none;
   box-shadow: none;
   padding: 4px 0;
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.15s;
 }
 .tox:not(.tox-tinymce-inline).tox-tinymce--toolbar-bottom .tox-editor-header {
   border-top: 1px solid #000000;
@@ -2539,7 +2539,7 @@ body.tox-dialog__disable-scroll {
 }
 .tox .tox-sidebar--sliding-growing,
 .tox .tox-sidebar--sliding-shrinking {
-  transition: width 0.5s ease, opacity 0.5s ease;
+  transition: width 0.15s ease, opacity 0.15s ease;
 }
 .tox .tox-selector {
   background-color: #4099ff;
@@ -2968,10 +2968,10 @@ body.tox-dialog__disable-scroll {
   visibility: hidden;
 }
 .tox .tox-toolbar__overflow--growing {
-  transition: height 0.3s ease, opacity 0.2s linear 0.1s;
+  transition: height 0.15s ease, opacity 0.2s linear 0.1s;
 }
 .tox .tox-toolbar__overflow--shrinking {
-  transition: opacity 0.3s ease, height 0.2s linear 0.1s, visibility 0s linear 0.3s;
+  transition: opacity 0.15s ease, height 0.2s linear 0.1s, visibility 0s linear 0.15s;
 }
 .tox .tox-toolbar-overlord,
 .tox .tox-anchorbar {

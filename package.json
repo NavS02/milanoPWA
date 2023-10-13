@@ -20,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@owliehq/vue-addtohomescreen": "^2.0.3",
     "@popperjs/core": "^2.11.8",
     "@studiometa/vue-mapbox-gl": "^2.1.1",
     "@tinymce/tinymce-vue": "^4.0.7",
@@ -32,16 +33,20 @@
     "bootstrap-vue": "https://github.com/bi0nd0/bootstrap-vue.git#1.2.14",
     "chart.js": "^4.3.0",
     "html2pdf.js": "0.10.1",
+    "leaflet": "^1.9.4",
     "mapbox-gl": "^2.15.0",
     "md-editor-v3": "^4.2.2",
     "turndown": "^7.1.2",
     "vue": "^3.3.0",
     "vue-accordion": "^1.0.0",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-carousel": "^0.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "sass": "^1.64.1",
-    "vite": "^4.1.0"
+    "vite": "^4.4.9",
+    "vite-plugin-pwa": "^0.16.5",
+    "workbox-webpack-plugin": "^7.0.0"
   }
 }

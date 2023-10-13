@@ -854,7 +854,7 @@ h3.card-title {
   line-height: 0;
   margin-right: 10px;
   text-align: center;
-  transition: 0.3s;
+  transition: 0.15s;
 }
 
 .profile .profile-overview .row {
@@ -877,7 +877,7 @@ h3.card-title {
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
-  transition: 0.3s;
+  transition: 0.15s;
   font-size: 17px;
 }
 
