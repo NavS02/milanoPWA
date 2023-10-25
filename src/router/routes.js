@@ -15,13 +15,27 @@ const routes = [
     children: [
       { path: "", name: "home", component: Home, props: true },
       { path: "/opere", name: "ListOpere", component: ListOpere, props: true },
-      { path: "/opere/:items", name: "ListItems", component: ListItems, props: true },
+      {
+        path: "/opere/:items",
+        name: "ListItems",
+        component: ListItems,
+        props: true,
+      },
       { path: "/map", name: "Map", component: Map, props: true },
-      { path: "/touch", name: "TouchScreen", component: TouchScreen, props: true },
-      { path: "/info/:item", name: "InfoItem", component: InfoItem, props: true },
+      {
+        path: "/touch",
+        name: "TouchScreen",
+        component: TouchScreen,
+        props: true,
+      },
+      {
+        path: "/info/:item",
+        name: "InfoItem",
+        component: InfoItem,
+        props: true,
+      },
       { path: "/contact", name: "Contact", component: Contact, props: true },
       { path: "/about", name: "About", component: About, props: true },
-
     ],
   },
 ];

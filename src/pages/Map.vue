@@ -123,20 +123,9 @@ function setNewPiano(piano) {
     }
   });
 }
-async function fetchItems(piano) {
-  try {
-    let response = await directus.items("app").readByQuery({
-      filter: {
-        pubblicata: { _eq: true },
-      },
-      limit: -1,
-    });
-    items.value = response.data;
-  } catch (error) {
-    items.value = data.value;
-    online.value = false;
-  }
-  localStorage.setItem("listOpere", JSON.stringify(items.value));
+async function fetchItems() {
+ 
+  items.value=data.value
 
   try {
     let url = import.meta.env.VITE_API_BASE_URL;

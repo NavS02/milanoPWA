@@ -56,20 +56,10 @@ const data = ref(JSON.parse(localStorage.getItem("listOpere")));
 const items = ref();
 const imageurl = ref("/logoMilanoSmall.png");
 const online=ref(true)
+
 async function fetchItems() {
-  try {
-    let response = await directus.items("app").readByQuery({
-      filter: {
-        pubblicata: { _eq: true },
-      },
-      limit: -1,
-    });
-    items.value = response.data;
-  } catch (error) {
-    items.value = data.value;
-    online.value=false;
-  }
-  localStorage.setItem("listOpere", JSON.stringify(items.value));
+ 
+  items.value=data.value
 
   try {
     let url = import.meta.env.VITE_API_BASE_URL;
