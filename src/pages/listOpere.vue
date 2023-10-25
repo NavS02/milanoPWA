@@ -1,0 +1,113 @@
+<template>
+  <div class="text-left">
+    <img src="/logoBig.jpg" alt="" style="width: 250px; margin-top: 5px" />
+    <hr />
+  </div>
+  <br />
+  <div class="container">
+    <div v-for="(item, index) in items" :key="index">
+      <router-link
+        class="nav-link"
+        :to="{
+          name: 'InfoItem',
+          params: { item: item.JSON },
+        }"
+      >
+      
+        <div class="card custom-card">
+          <div class="card-body" style="margin: -10px !important">
+            <div class="row">
+              <div class="col-5">
+                <div class="custom-div text-center" v-if="online">
+                  <img 
+                    :src="item.icona"
+                    alt=""
+                    srcset=""
+                    style="object-fit: contain" :id="'image'+index"
+                  /> 
+                </div>
+                 <div class="custom-div text-center" v-else>
+                  SEI OFFLINE
+                </div>
+              </div>
+              <div class="text-right col-7">
+                {{ item.titolo }}
+                <br />
+                <br />
+                <span
+                  style="font-style: italic; font-size: 14px; float: right"
+                  >{{ item.autore }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </router-link>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, toRefs, watch, computed, onMounted } from "vue";
+import { directus } from "../API";
+
+const data = ref(JSON.parse(localStorage.getItem("listOpere")));
+
+const items = ref();
+const imageurl = ref("/logoMilanoSmall.png");
+const online=ref(true)
+async function fetchItems() {
+  try {
+    let response = await directus.items("app").readByQuery({
+      filter: {
+        pubblicata: { _eq: true },
+      },
+      limit: -1,
+    });
+    items.value = response.data;
+  } catch (error) {
+    items.value = data.value;
+    online.value=false;
+  }
+  localStorage.setItem("listOpere", JSON.stringify(items.value));
+
+  try {
+    let url = import.meta.env.VITE_API_BASE_URL;
+    for (let index = 0; index < items.value.length; index++) {
+      if (items.value[index].icona !== null) {
+        items.value[index].icona = url + "/assets/" + items.value[index].icona;
+      }
+      items.value[index].JSON = JSON.stringify(items.value[index]);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+onMounted(async () => {
+  await fetchItems();
+});
+</script>
+<style scoped>
+.custom-div {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.custom-div img {
+  max-width: 100px;
+  max-height: 100px;
+}
+.custom-card {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.custom-title {
+  font-size: 12px;
+  text-align: right;
+}
+</style>

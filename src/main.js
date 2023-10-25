@@ -44,4 +44,3 @@ import {router} from './router'
 app.use(router)
 
 app.mount('#app')
-

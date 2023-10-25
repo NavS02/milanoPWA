@@ -14,12 +14,13 @@ export default defineConfig({
       },
       manifest: {
         
-          "name": "Chiostri di Sant'Eustorgio",
-          "short_name": "Chiostri di Sant'Eustorgio",
+          "name": "Museo Diocesano di Milano",
+          "short_name": "Museo Diocesano",
           "start_url": "/",
           "display": "standalone",
           "background_color": "#ffffff",
           "theme_color": "#000000",
+          
           "icons": [
             {
               "src": "./icon.png",

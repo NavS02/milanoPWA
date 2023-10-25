@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-center mt-5 mb-5">Le opere</h1>
+  <br />
   <div class="container">
     <div class="accordion" id="accordionExample">
       <div
@@ -25,7 +25,7 @@
           :aria-labelledby="'heading' + pianoIndex"
           :data-bs-parent="'#accordionExample'"
         >
-          <div class="accordion-body">
+          <div class="accordion-body" style="margin: -10px !important">
             <div
               v-for="(sala, salaIndex) in piano.sale"
               :key="salaIndex"
@@ -53,18 +53,21 @@
                   :aria-labelledby="'heading' + pianoIndex + salaIndex"
                   :data-bs-parent="'#collapse' + pianoIndex"
                 >
-                  <div class="accordion-body">
+                  <div class="accordion-body" style="margin: -10px !important">
                     <div v-for="(item, index) in items" :key="index">
                       <div v-if="cleanString(sala) === cleanString(item.sala)">
                         <router-link
                           class="nav-link"
                           :to="{
                             name: 'InfoItem',
-                            params: { id: item.id },
+                            params: { item: item.JSON },
                           }"
                         >
                           <div class="card custom-card">
-                            <div class="card-body">
+                            <div
+                              class="card-body"
+                              style="margin: -10px !important"
+                            >
                               <div class="row">
                                 <div class="col-5">
                                   <div class="custom-div text-center">
@@ -107,12 +110,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, toRefs, watch, computed, onMounted } from "vue";
 import { directus } from "../API";
 
 function cleanString(input) {
   return input.replace(/\s/g, "").toLowerCase();
 }
+const props = defineProps({
+  itemsData: { type: Array, default: null },
+});
+const { itemsData } = toRefs(props);
 
 const piani = ref([
   {
@@ -140,31 +147,9 @@ const piani = ref([
     sale: [],
   },
 ]);
-const items = ref();
+const items = ref(itemsData);
 const imageurl = ref("/logoMilanoSmall.png");
 
-async function fetchItems() {
-  let response = await directus.items("app").readByQuery({
-    filter: {
-      pubblicata: { _eq: true },
-    },
-    limit: -1,
-  });
-  items.value = response.data;
-  try {
-    let url = import.meta.env.VITE_API_BASE_URL;
-    for (let index = 0; index < items.value.length; index++) {
-      if (items.value[index].icona !== null) {
-        items.value[index].icona = url + "/assets/" + items.value[index].icona;
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-onMounted(async () => {
-  await fetchItems();
-});
 </script>
 <style scoped>
 .custom-div {

@@ -2,6 +2,7 @@
   <div>
     <div class="overlay" v-if="isLoading"></div>
 
+<!-- LOADING ANIMATION -->
     <svg
       v-if="isLoading"
       class="loader-svg"
@@ -163,22 +164,43 @@ c5 -13 12 -37 15 -53 3 -16 10 -49 15 -74 11 -54 33 -185 37 -220 2 -14 6 -36
     </svg>
 
     <div class="container">
+      <!-- PAGE CONTENT -->
       <main>
         <section class="layout">
           <router-view />
         </section>
       </main>
-      <nav class="navigation-menu">
-        <button
-          @click="listOpere"
-          :class="{ active: route.name === 'ListItems' }"
-        >
-          <i class="bi bi-brush"></i>
-        </button>
+      <!-- IF THE USER IS ONLINE SHOW ICONS -->
+      <nav class="navigation-menu" v-if="online">
         <button @click="goHome" :class="{ active: route.name === 'home' }">
           <i class="bi bi-house"></i>
         </button>
-        <button @click="goMap" :class="{ active: route.name === 'Map' }"><i class="bi bi-map"></i></button>
+        <button @click="goMap" :class="{ active: route.name === 'Map' }">
+          <i class="bi bi-map"></i>
+        </button>
+
+        <button
+          @click="listOpere"
+          :class="{ active: route.name === 'ListOpere' }"
+        >
+          <i class="bi bi-brush"></i>
+        </button>
+      </nav>
+      <!-- IF NOT SHOW TEXT -->
+      <nav class="navigation-menu" v-else>
+        <button @click="goHome" :class="{ active: route.name === 'home' }">
+          HOME
+        </button>
+        <button @click="goMap" :class="{ active: route.name === 'Map' }">
+          MAPPA
+        </button>
+
+        <button
+          @click="listOpere"
+          :class="{ active: route.name === 'ListOpere' }"
+        >
+          OPERE
+        </button>
       </nav>
     </div>
   </div>
@@ -189,20 +211,18 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
+const online = ref(true);
 
 let isLoading = ref(false);
 
 function goHome() {
-
   router.push({ name: "home" });
-
- 
 }
 
 function listOpere() {
   isLoading.value = true;
 
-  router.push({ name: "ListItems" });
+  router.push({ name: "ListOpere" });
 
   setTimeout(() => {
     isLoading.value = false;
@@ -217,11 +237,52 @@ function goMap() {
     isLoading.value = false;
   }, 1000);
 }
+
+async function fetchItems() {
+  try {
+    let response = await directus.items("app").readByQuery({
+      filter: {
+        pubblicata: { _eq: true },
+      },
+      limit: -1,
+    });
+    items.value = response.data;
+  } catch (error) {
+    items.value = data.value;
+    online.value=false;
+  }
+  localStorage.setItem("listOpere", JSON.stringify(items.value));
+
+  try {
+    let url = import.meta.env.VITE_API_BASE_URL;
+    for (let index = 0; index < items.value.length; index++) {
+      if (items.value[index].icona !== null) {
+        items.value[index].icona = url + "/assets/" + items.value[index].icona;
+      }
+      items.value[index].JSON = JSON.stringify(items.value[index]);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+window.addEventListener("offline", () => {
+  online.value = false;
+});
+window.addEventListener("online", () => {
+  online.value = true;
+});
+onMounted(async () => {
+  if (navigator.onLine == false) {
+    online.value = navigator.onLine;
+  }
+});
 </script>
 
 <style scoped>
 body {
-  margin: 0; 
+  margin: 0;
 }
 .overlay {
   position: fixed;
@@ -234,8 +295,8 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 9999;
-
 }
+
 .loader-svg {
   position: fixed;
   top: 50%;
@@ -254,21 +315,24 @@ section {
 .container {
   display: grid;
   grid-template-rows: auto 1fr;
-  z-index:999 }
+  z-index: 999;
+}
 
 main {
-  overflow-y: auto; }
+  overflow-y: auto;
+}
 
 .layout {
-  padding-bottom: 60px; }
+  padding-bottom: 60px;
+}
 
 .navigation-menu {
   position: fixed;
   bottom: 0;
-right:0;
+  right: 0;
   width: 100%;
   height: 7%;
-  background-color: #b10b1c;
+  background-color: #00458d;
   display: flex;
   justify-content: space-around;
 }

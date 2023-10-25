@@ -6,5 +6,7 @@ if ('serviceWorker' in navigator) {
       .catch(function(error) {
         console.error('Service Worker registration failed:', error);
       });
+  }else{
+    console.log('its installed')
   }
   
