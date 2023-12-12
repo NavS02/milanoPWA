@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <main class="centered-main">
+  <div >
     <div style="text-align: center; margin-top: 10%">
-      <img src="/logoMilanoSmall.png" alt="" style="width: 50%" id="storage1" />
-      <br />
-      <br />
+      
       <img
         src="/MuseoDiocesano_CMYK.jpg"
         alt=""
@@ -11,6 +10,8 @@
         srcset=""
         id="storage2"
       />
+      <br />
+      <br />
     </div>
     <router-link class="nav-link" :to="{ name: 'Map' }">
       <div class="card" style="position: relative">
@@ -179,6 +180,7 @@
       </div>
     </div>
   </div>
+  </main>
 </template>
 
 <script setup>
@@ -346,5 +348,11 @@ a {
   margin: 20px;
   cursor: pointer;
   border-radius: 5px;
+}
+.centered-main {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh; 
 }
 </style>

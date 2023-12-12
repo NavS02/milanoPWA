@@ -1,7 +1,7 @@
 <template>
   <main style="width: 100%; overflow-x: hidden">
     <div class="text-left">
-      <img src="/logoBig.jpg" alt="" style="width: 250px; margin-top: 5px" />
+      <img src="/MuseoDiocesano_CMYK.jpg" alt="" style="width: 250px; margin-top: 5px" />
       <hr />
     </div>
     <div class="text-center" style="">
@@ -24,7 +24,7 @@
           </button>
         </div>
       </div>
-      <h5 style="font-style: italic; font-size: 16px">{{ autore }}</h5>
+      <h4 style="font-style: italic; ">{{ autore }}</h4>
       <h4>{{ titolo }} - {{ data }}</h4>
       <hr />
       <ul>
@@ -32,9 +32,7 @@
         <li><strong>Collezione: </strong>{{ collezione }}</li>
 
         <li>
-          <strong>Collocazione: </strong>{{ piano }},{{ sala }},{{ parete }},{{
-            specifiche
-          }}
+          <strong>Provenienza: </strong>{{provenienza}}
         </li>
       </ul>
       <hr />
@@ -67,7 +65,7 @@ const parete = ref();
 const specifiche = ref();
 const descrizione = ref();
 const icona = ref();
-
+const provenienza=ref()
 async function fetchItems() {
   myItem.value = JSON.parse(item.value);
   if (
@@ -81,6 +79,8 @@ async function fetchItems() {
     data.value = myItem.value.data;
     materia.value = myItem.value.materia;
     collezione.value = myItem.value.collezione;
+    provenienza.value = myItem.value.provenienza;
+
     piano.value = myItem.value.piano;
     sala.value = myItem.value.sala;
     parete.value = myItem.value.parete;

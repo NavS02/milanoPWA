@@ -1,6 +1,6 @@
 <template>
   <div class="text-left">
-    <img src="/logoBig.jpg" alt="" style="width: 250px; margin-top: 5px" />
+    <img src="/MuseoDiocesano_CMYK.jpg" alt="" style="width: 250px; margin-top: 5px" />
     <hr />
   </div>
   <br />
@@ -60,7 +60,6 @@ const online=ref(true)
 async function fetchItems() {
  
   items.value=data.value
-
   try {
     let url = import.meta.env.VITE_API_BASE_URL;
     for (let index = 0; index < items.value.length; index++) {

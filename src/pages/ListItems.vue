@@ -26,6 +26,51 @@
           :data-bs-parent="'#accordionExample'"
         >
           <div class="accordion-body" style="margin: -10px !important">
+            <div v-if="piano.piano=='Ipogeo'">
+  <div v-for="(item, index) in items" :key="index">
+            <div v-if="item.piano=='ipogeo'">
+                        <router-link
+                          class="nav-link"
+                          :to="{
+                            name: 'InfoItem',
+                            params: { item: item.JSON },
+                          }"
+                        >
+                          <div class="card custom-card">
+                            <div
+                              class="card-body"
+                              style="margin: -10px !important"
+                            >
+                              <div class="row">
+                                <div class="col-5">
+                                  <div class="custom-div text-center">
+                                    <img
+                                      :src="item.icona"
+                                      alt=""
+                                      srcset=""
+                                      style="object-fit: contain"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="text-right col-7">
+                                  {{ item.titolo }}
+                                  <br />
+                                  <br />
+                                  <span
+                                    style="
+                                      font-style: italic;
+                                      font-size: 10px;
+                                      float: right;
+                                    "
+                                    >{{ item.autore }}</span
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </router-link>
+                        </div>
+                    </div>            </div>
             <div
               v-for="(sala, salaIndex) in piano.sale"
               :key="salaIndex"

@@ -1,9 +1,6 @@
 <template>
   <div>
 
-<!-- LOADING ANIMATION -->
-
-
     <div class="container">
       <!-- PAGE CONTENT -->
       <main>

@@ -23,7 +23,7 @@ export default defineConfig({
           
           "icons": [
             {
-              "src": "./icon.png",
+              "src": "/MuseoDiocesano_CMYK (3).jpg",
               "sizes": "192x192",
               "type": "image/png"
             }

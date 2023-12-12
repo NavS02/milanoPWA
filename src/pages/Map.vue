@@ -1,6 +1,10 @@
 <template>
   <div class="text-left">
-    <img src="/logoBig.jpg" alt="" style="width: 250px; margin-top: 5px" />
+    <img
+      src="/MuseoDiocesano_CMYK.jpg"
+      alt=""
+      style="width: 250px; margin-top: 5px"
+    />
     <hr />
   </div>
   <div class="text-center">
@@ -21,24 +25,29 @@
   </div>
   <div id="map" v-if="optionSelected === 'Map'">
     <div class="mycarousel" style="margin-top: 20px">
-      <carousel :items-to-show="1">
+      <carousel :items-to-show="1" @slide-end="setNewPiano()">
         <slide v-for="(item, index) in mydata.items" :key="index">
           <img :src="item.image" :id="item.piano" />
-          {{ setNewPiano(item.piano) }}
         </slide>
       </carousel>
       <div class="text-center">
         <h2>{{ currentPiano }}</h2>
+        <img
+          v-if="!loaded"
+          src="/loaderAnimation.webp"
+          style="width: 100%"
+          alt=""
+        />
       </div>
       <br />
-      <div class="container">
+      <div class="container" v-if="loaded">
         <div class="row">
           <div
             class="col-lg-4 col-md-6 col-sm-12 col-4"
             v-for="(item, index) in items"
             :key="index"
           >
-            <div v-if="currentPiano == item.piano">
+            <div v-if="currentPiano == item.piano" class="itemsCard">
               <router-link
                 class="nav-link"
                 :to="{
@@ -67,6 +76,7 @@
                 </div>
               </router-link>
             </div>
+            <div v-else id="nonCreated"></div>
           </div>
         </div>
       </div>
@@ -85,7 +95,7 @@ const mydata = ref({
   items: [
     { image: "/mappa_pianoterra.png", piano: "piano terra" },
     { image: "/mappa_1piano.png", piano: "primo piano" },
-    { image: "/mappa_interrato.png", piano: "Interrato" },
+    { image: "/mappa_interrato.png", piano: "ipogeo" },
   ],
 });
 const items = ref();
@@ -94,6 +104,7 @@ const currentPiano = ref("");
 const optionSelected = ref("Map");
 const online = ref(true);
 const data = ref(JSON.parse(localStorage.getItem("listOpere")));
+const loaded = ref(false);
 const imagesToSave = [
   "/mappa_pianoterra.png",
   "/mappa_1piano.png",
@@ -124,22 +135,41 @@ function setNewPiano(piano) {
   });
 }
 async function fetchItems() {
- 
-  items.value=data.value
-
   try {
+    loaded.value = false;
+
+
+
+    items.value = data.value;
+
     let url = import.meta.env.VITE_API_BASE_URL;
+
     for (let index = 0; index < items.value.length; index++) {
-      if (items.value[index].icona !== null) {
+      if (
+        items.value[index].icona !== null &&
+        items.value[index].icona.length < 50
+      ) {
         items.value[index].icona = url + "/assets/" + items.value[index].icona;
       }
       items.value[index].JSON = JSON.stringify(items.value[index]);
     }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
   } catch (error) {
-    console.log(error);
+    console.error(error);
+  } finally {
+    loaded.value = true;
+    removeNonCreatedElements();
   }
 }
-
+async function removeNonCreatedElements() {
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  var elementosAEliminar = document.querySelectorAll('#nonCreated');
+  elementosAEliminar.forEach(function (elemento) {
+    var elementoPadre = elemento.parentNode;
+    elementoPadre.remove();
+  });
+}
 function saveImages() {
   const savedImages = {};
 
@@ -169,7 +199,7 @@ function fetchImages() {
 
   const base64Image0 = savedImages["/mappa_pianoterra.png"];
   const base64Image1 = savedImages["/mappa_1piano.png"];
-  const base64Image2 = savedImages["/mappa_interrato.png"];
+  const base64Image2 = savedImages["/mappa_ipogeo.png"];
 
   if (base64Image0) {
     let storage = document.getElementById("piano terra");
@@ -177,11 +207,11 @@ function fetchImages() {
   }
   if (base64Image1) {
     let storage = document.getElementById("primo piano");
-    storage.src = base64Image0;
+    storage.src = base64Image1;
   }
   if (base64Image2) {
-    let storage = document.getElementById("Interrato");
-    storage.src = base64Image0;
+    let storage = document.getElementById("ipogeo");
+    storage.src = base64Image2;
   }
 }
 
@@ -193,10 +223,11 @@ onMounted(async () => {
     online.value = navigator.onLine;
   }
   saveImages();
-  fetchImages();
+  await fetchItems();
+  setNewPiano();
 });
 window.addEventListener("offline", () => {
-  fetchImages();
+  fetchImages("piano terra");
 });
 </script>
 

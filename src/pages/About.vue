@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <img src="/logoBig.jpg" alt="" style="width:350px;margin-top:15%"/>
+    <img src="/MuseoDiocesano_CMYK.jpg" alt="" style="width:350px;margin-top:15%"/>
 
     <img src="/logoMilano.png" alt="" style="width:300px;margin-top:15%"/>
     
