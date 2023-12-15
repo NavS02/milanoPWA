@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 
 const nome = ref("");
 const email = ref("");
@@ -23,7 +23,24 @@ const submitForm = () => {
   email.value = "";
   descrizione.value = "";
 };
+function fetchImages() {
+  let myImages = JSON.parse(localStorage.getItem("myImages"));
 
-async function sendEmail() {}
+  if (myImages) {
+    myImages.forEach((element) => {
+      let imageInCode = document.querySelector(`img[src="${element.source}"]`);
+      if (imageInCode) {
+        imageInCode.src = element.base64src;
+      }
+    });
+  } else {
+    console.log("No saved images.");
+  }
+}
+
+onMounted(async () => {
+    fetchImages();
+
+});
 </script>
 <style scoped></style>

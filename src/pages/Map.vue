@@ -27,7 +27,9 @@
     <div class="mycarousel" style="margin-top: 20px">
       <carousel :items-to-show="1" @slide-end="setNewPiano()">
         <slide v-for="(item, index) in mydata.items" :key="index">
-          <img :src="item.image" :id="item.piano" />
+          
+                  
+          <img :src="item.image" :id="item.piano " />
         </slide>
       </carousel>
       <div class="text-center">
@@ -110,12 +112,13 @@ const imagesToSave = [
   "/mappa_1piano.png",
   "/mappa_interrato.png",
 ];
-function setnewView(option) {
+async function setnewView(option) {
   optionSelected.value = option;
   if (option == "Map") {
-    setTimeout(function () {
-      fetchImages();
-    }, 1500);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    fetchImages();
+
+    setNewPiano("piano terra");
   }
 }
 setNewPiano();
@@ -138,19 +141,10 @@ async function fetchItems() {
   try {
     loaded.value = false;
 
-
-
     items.value = data.value;
 
-    let url = import.meta.env.VITE_API_BASE_URL;
 
     for (let index = 0; index < items.value.length; index++) {
-      if (
-        items.value[index].icona !== null &&
-        items.value[index].icona.length < 50
-      ) {
-        items.value[index].icona = url + "/assets/" + items.value[index].icona;
-      }
       items.value[index].JSON = JSON.stringify(items.value[index]);
     }
 
@@ -164,56 +158,29 @@ async function fetchItems() {
 }
 async function removeNonCreatedElements() {
   await new Promise((resolve) => setTimeout(resolve, 0));
-  var elementosAEliminar = document.querySelectorAll('#nonCreated');
+  var elementosAEliminar = document.querySelectorAll("#nonCreated");
   elementosAEliminar.forEach(function (elemento) {
     var elementoPadre = elemento.parentNode;
     elementoPadre.remove();
   });
 }
-function saveImages() {
-  const savedImages = {};
-
-  for (const imageUrl of imagesToSave) {
-    fetch(imageUrl)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.onload = function () {
-          const base64Image = reader.result;
-          savedImages[imageUrl] = base64Image;
-
-          if (Object.keys(savedImages).length === imagesToSave.length) {
-            localStorage.setItem("savedImagesMap", JSON.stringify(savedImages));
-          }
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch((error) => {
-        console.error("Error fetching the image:", error);
-      });
-  }
-}
 
 function fetchImages() {
-  const savedImages = JSON.parse(localStorage.getItem("savedImagesMap")) || {};
+  let myImages = JSON.parse(localStorage.getItem("myImages"));
 
-  const base64Image0 = savedImages["/mappa_pianoterra.png"];
-  const base64Image1 = savedImages["/mappa_1piano.png"];
-  const base64Image2 = savedImages["/mappa_ipogeo.png"];
-
-  if (base64Image0) {
-    let storage = document.getElementById("piano terra");
-    storage.src = base64Image0;
-  }
-  if (base64Image1) {
-    let storage = document.getElementById("primo piano");
-    storage.src = base64Image1;
-  }
-  if (base64Image2) {
-    let storage = document.getElementById("ipogeo");
-    storage.src = base64Image2;
+  if (myImages) {
+    myImages.forEach((element) => {
+      let imageInCode = document.querySelector(`img[src="${element.source}"]`);
+      if (imageInCode) {
+        imageInCode.src = element.base64src;
+      }
+    });
+  } else {
+    console.log("No saved images.");
   }
 }
+
+
 
 function onlineChanged(newValue, oldValue) {
   fetchImages();
@@ -222,13 +189,12 @@ onMounted(async () => {
   if (navigator.onLine == false) {
     online.value = navigator.onLine;
   }
-  saveImages();
   await fetchItems();
   setNewPiano();
+    fetchImages();
+
 });
-window.addEventListener("offline", () => {
-  fetchImages("piano terra");
-});
+
 </script>
 
 <style scoped>

@@ -91,7 +91,6 @@ async function fetchItems() {
     items.value = data.value;
     online.value=false;
   }
-  localStorage.setItem("listOpere", JSON.stringify(items.value));
 
   try {
     let url = import.meta.env.VITE_API_BASE_URL;
@@ -104,7 +103,100 @@ async function fetchItems() {
   } catch (error) {
     console.log(error);
   }
+  localStorage.setItem("listOpere", JSON.stringify(items.value));
+
 }
+function saveImages() {
+  let myImages = [
+    {
+      component: "home",
+      source: "/MuseoDiocesano_CMYK.jpg",
+      base64src: "",
+
+    },
+    {
+      component: "home",
+      source: "/imageedit_21_3799431085.jpg",
+      base64src: "",
+
+    },
+    {
+      component: "home",
+      source: "/Capture.jpg",
+      base64src: "",
+
+    },
+    {
+      component: "map",
+      source: "/mappa_pianoterra.png",
+      base64src: "",
+
+    },
+    {
+      component: "map",
+      source: "/mappa_1piano.png",
+      base64src: "",
+
+    },
+    {
+      component: "map",
+      source: "/mappa_interrato.png",
+      base64src: "",
+
+    },
+     {
+      component: "credit",
+      source: "/logoMilano.png",
+      base64src: "",
+
+    },
+     {
+      component: "credit",
+      source: "/logo-fondazionecariplo.webp",
+      base64src: "",
+
+    }, {
+      component: "credit",
+      source: "/logoAND.png",
+      base64src: "",
+
+    },
+  ];
+
+  // Convertir las fuentes a base64 y guardarlas en un nuevo array
+  let base64Images = myImages.map((image) => {
+    let img = new Image();
+    img.src = image.source;
+
+    // Convertir la imagen a base64 después de que se haya cargado
+    img.onload = function () {
+      let canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      let context = canvas.getContext("2d");
+      context.drawImage(img, 0, 0);
+
+      // Obtener el contenido de la imagen en base64
+      let base64Source = canvas.toDataURL("image/png");
+
+      // Guardar en el array
+      image.base64src = base64Source;
+
+      // Guardar el array de imágenes en el localStorage
+      localStorage.setItem("myImages", JSON.stringify(myImages));
+    };
+
+    return {
+      component: image.component,
+      source: "", // Dejar en blanco, se llenará después de cargar la imagen
+    };
+  });
+}
+
+// Llama a la función para realizar la conversión y guardar en el localStorage
+saveImages();
+
+
 
 
 window.addEventListener("offline", () => {

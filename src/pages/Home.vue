@@ -190,12 +190,7 @@ const isModalVisible = ref(false);
 
 const showInstallButton = ref(false);
 const OS = ref();
-const imagesToSave = [
-  "/logoMilanoSmall.png",
-  "/MuseoDiocesano_CMYK.jpg",
-  "/Capture.jpg",
-  "/imageedit_21_3799431085.jpg",
-];
+
 watch(online, onlineChanged);
 function selectOS(selection) {
   OS.value = selection;
@@ -209,43 +204,25 @@ function closeModal() {
   OS.value = null;
 }
 
-function saveImages() {
-  const savedImages = {};
-
-  for (const imageUrl of imagesToSave) {
-    fetch(imageUrl)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.onload = function () {
-          const base64Image = reader.result;
-          savedImages[imageUrl] = base64Image;
-
-          if (Object.keys(savedImages).length === imagesToSave.length) {
-            localStorage.setItem("savedImages", JSON.stringify(savedImages));
-          }
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch((error) => {
-        console.error("Error fetching the image:", error);
-      });
-  }
-}
 
 function fetchImages() {
-  const savedImages = JSON.parse(localStorage.getItem("savedImages")) || {};
-  let index = 1;
-  for (const imageUrl of imagesToSave) {
-    const base64Image = savedImages[imageUrl];
-    if (base64Image) {
-      let storage = document.getElementById("storage" + index);
-      storage.src = base64Image;
-    }
-    index++;
+  let myImages = JSON.parse(localStorage.getItem("myImages"));
+
+  if (myImages) {
+    myImages.forEach((element) => {
+      let imageInCode = document.querySelector(`img[src="${element.source}"]`);
+      if (imageInCode) {
+        imageInCode.src = element.base64src;
+      }
+    });
+  } else {
+    console.log("No saved images.");
   }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  fetchImages();
+});
 function onlineChanged(newValue, oldValue) {
   fetchImages();
 }
@@ -253,7 +230,6 @@ onMounted(async () => {
   if (navigator.onLine == false) {
     online.value = navigator.onLine;
   }
-  saveImages();
 });
 window.addEventListener("offline", () => {
   fetchImages();

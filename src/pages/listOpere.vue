@@ -61,17 +61,32 @@ async function fetchItems() {
  
   items.value=data.value
   try {
-    let url = import.meta.env.VITE_API_BASE_URL;
     for (let index = 0; index < items.value.length; index++) {
-      if (items.value[index].icona !== null) {
-        items.value[index].icona = url + "/assets/" + items.value[index].icona;
-      }
+   
       items.value[index].JSON = JSON.stringify(items.value[index]);
     }
   } catch (error) {
     console.log(error);
   }
 }
+function fetchImages() {
+  let myImages = JSON.parse(localStorage.getItem("myImages"));
+
+  if (myImages) {
+    myImages.forEach((element) => {
+      let imageInCode = document.querySelector(`img[src="${element.source}"]`);
+      if (imageInCode) {
+        imageInCode.src = element.base64src;
+      }
+    });
+  } else {
+    console.log("No saved images.");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  fetchImages();
+});
 onMounted(async () => {
   await fetchItems();
 });
