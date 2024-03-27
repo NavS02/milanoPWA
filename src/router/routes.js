@@ -21,7 +21,7 @@ const routes = [
         component: ListItems,
         props: true,
       },
-      { path: "/map", name: "Map", component: Map, props: true },
+      { path: "/map/:lastRoute", name: "Map", component: Map, props: true },
       {
         path: "/touch",
         name: "TouchScreen",
@@ -29,7 +29,7 @@ const routes = [
         props: true,
       },
       {
-        path: "/info/:item",
+        path: "/info/:item/:lastRoute",
         name: "InfoItem",
         component: InfoItem,
         props: true,

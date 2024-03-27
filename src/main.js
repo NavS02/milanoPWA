@@ -38,7 +38,12 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 /* add icons to the library */
 library.add(fas, far, fab)
 
-
+const componentModules = import.meta.glob('./src/pages/**/*.vue')
+Object.keys(componentModules).forEach((path) => {
+  const component = componentModules[path].default
+  const componentName = component.name || path.split('/').pop().replace(/\.\w+$/, '')
+  app.component(componentName, component)
+})
 /* router */
 import {router} from './router'
 app.use(router)

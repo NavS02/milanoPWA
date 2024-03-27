@@ -10,11 +10,11 @@
         class="nav-link"
         :to="{
           name: 'InfoItem',
-          params: { item: item.JSON },
+          params: { item: item.JSON,lastRoute:'null' },
         }"
       >
       
-        <div class="card custom-card">
+        <div class="card custom-card" style="margin-top:-15px">
           <div class="card-body" style="margin: -10px !important">
             <div class="row">
               <div class="col-5">

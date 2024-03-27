@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="container">
       <!-- PAGE CONTENT -->
       <main>
@@ -52,7 +51,7 @@ import { directus } from "../API";
 const route = useRoute();
 const router = useRouter();
 const online = ref(true);
-const items=ref();
+const items = ref();
 let isLoading = ref(false);
 
 function goHome() {
@@ -71,7 +70,7 @@ function listOpere() {
 function goMap() {
   isLoading.value = true;
 
-  router.push({ name: "Map" });
+  router.push({ name: "Map", params: { lastRoute: "null" } });
 
   setTimeout(() => {
     isLoading.value = false;
@@ -86,10 +85,21 @@ async function fetchItems() {
       },
       limit: -1,
     });
+    let response2 = await directus.items("app_salaLabel").readByQuery({
+      limit: -1,
+    });
     items.value = response.data;
+    items.value.forEach((opera) => {
+      response2.data.forEach((sala) => {
+        if (opera.salaLabel == sala.id) {
+          opera.salaLabel = sala.sala_nome;
+          opera.colore = sala.colore_sala;
+        }
+      });
+    });
   } catch (error) {
     items.value = data.value;
-    online.value=false;
+    online.value = false;
   }
 
   try {
@@ -104,7 +114,6 @@ async function fetchItems() {
     console.log(error);
   }
   localStorage.setItem("listOpere", JSON.stringify(items.value));
-
 }
 function saveImages() {
   let myImages = [
@@ -112,63 +121,53 @@ function saveImages() {
       component: "home",
       source: "/MuseoDiocesano_CMYK.jpg",
       base64src: "",
-
     },
     {
       component: "home",
       source: "/imageedit_21_3799431085.jpg",
       base64src: "",
-
     },
     {
       component: "home",
       source: "/Capture.jpg",
       base64src: "",
-
     },
     {
       component: "map",
-      source: "/mappa_pianoterra.png",
+      source: "/pianoTerra.png",
       base64src: "",
-
     },
     {
       component: "map",
-      source: "/mappa_1piano.png",
+      source: "/primo2.png",
       base64src: "",
-
     },
     {
       component: "map",
-      source: "/mappa_interrato.png",
+      source: "/ipogeo2.png",
       base64src: "",
-
     },
-     {
+    {
       component: "credit",
       source: "/logoMilano.png",
       base64src: "",
-
     },
-     {
+    {
       component: "credit",
-      source: "/logo-fondazionecariplo.webp",
+      source: "/logo-fondazionecariplo.png",
       base64src: "",
-
-    }, {
+    },
+    {
       component: "credit",
       source: "/logoAND.png",
       base64src: "",
-
     },
   ];
 
-  // Convertir las fuentes a base64 y guardarlas en un nuevo array
   let base64Images = myImages.map((image) => {
     let img = new Image();
     img.src = image.source;
 
-    // Convertir la imagen a base64 después de que se haya cargado
     img.onload = function () {
       let canvas = document.createElement("canvas");
       canvas.width = img.width;
@@ -176,28 +175,21 @@ function saveImages() {
       let context = canvas.getContext("2d");
       context.drawImage(img, 0, 0);
 
-      // Obtener el contenido de la imagen en base64
       let base64Source = canvas.toDataURL("image/png");
 
-      // Guardar en el array
       image.base64src = base64Source;
 
-      // Guardar el array de imágenes en el localStorage
       localStorage.setItem("myImages", JSON.stringify(myImages));
     };
 
     return {
       component: image.component,
-      source: "", // Dejar en blanco, se llenará después de cargar la imagen
+      source: "",
     };
   });
 }
 
-// Llama a la función para realizar la conversión y guardar en el localStorage
 saveImages();
-
-
-
 
 window.addEventListener("offline", () => {
   online.value = false;
@@ -208,7 +200,7 @@ window.addEventListener("online", () => {
 onMounted(async () => {
   if (navigator.onLine == false) {
     online.value = navigator.onLine;
-  }else{
+  } else {
     await fetchItems();
   }
 });

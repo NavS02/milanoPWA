@@ -13,24 +13,22 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        
-          "name": "Museo Diocesano di Milano",
-          "short_name": "Museo Diocesano",
-          "start_url": "/",
-          "display": "standalone",
-          "background_color": "#ffffff",
-          "theme_color": "#000000",
-          
-          "icons": [
-            {
-              "src": "/MuseoDiocesano_CMYK (3).jpg",
-              "sizes": "192x192",
-              "type": "image/png"
-            }
-          ]
-        
-              },
-              filename: "service-worker.js",
+        name: "Museo Diocesano di Milano",
+        short_name: "Museo Diocesano",
+        start_url: "/",
+        display: "standalone",
+        background_color: "#ffffff",
+        theme_color: "#000000",
+
+        icons: [
+          {
+            src: "/MuseoDiocesano_CMYK (3).jpg",
+            sizes: "192x192",
+            type: "image/png",
+          },
+        ],
+      },
+      filename: "service-worker.js",
     }),
   ],
   server: {
@@ -39,6 +37,7 @@ export default defineConfig({
         target: "https://www.directusmilano.ambientinarratividigitali.it/",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
+        https: true,
       },
     },
   },

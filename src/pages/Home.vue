@@ -13,7 +13,7 @@
       <br />
       <br />
     </div>
-    <router-link class="nav-link" :to="{ name: 'Map' }">
+    <router-link class="nav-link" :to="{ name: 'Map',params:{lastRoute:'null'} }">
       <div class="card" style="position: relative">
         <img
           src="/imageedit_21_3799431085.jpg"

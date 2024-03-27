@@ -1,18 +1,23 @@
 <template>
   <div class="text-center">
-    <img src="/MuseoDiocesano_CMYK.jpg" alt="" style="width:350px;margin-top:15%"/>
+    <img
+      src="/MuseoDiocesano_CMYK.jpg"
+      alt=""
+      style="width: 350px; margin-top: 15%"
+    />
 
-    <img src="/logoMilano.png" alt="" style="width:300px;margin-top:15%"/>
-    
-    <img src="/logo-fondazionecariplo.webp" alt="" style="width:300px;"/>
-
-    <hr>
-    <img src="/logoAND.png" alt="" style="width:300px;"/>
-
+    <img src="/logoMilano.png" alt="" style="width: 300px; margin-top: 15%" />
+    <div style="margin-top: 15%">
+      Realizzato con il contributo di:
+      <img src="/logo-fondazionecariplo.png" alt="" style="width: 300px" />
+    </div>
+    <br /><br /><br />
+    <hr />
+    <img src="/logoAND.png" alt="" style="width: 200px" />
   </div>
 </template>
 <script setup>
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 const nome = ref("");
 const email = ref("");
@@ -39,8 +44,7 @@ function fetchImages() {
 }
 
 onMounted(async () => {
-    fetchImages();
-
+  fetchImages();
 });
 </script>
 <style scoped></style>
